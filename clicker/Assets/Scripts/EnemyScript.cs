@@ -13,7 +13,8 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         // Obtener el SpriteRenderer para cambiar color
-        spriteRenderer = GetComponent<SpriteRenderer>(); 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        Bubble.OnActionTriggeredWithFloat += HandleActionWithFloat;
     }
     
     //----------------------------------------------------------------
@@ -30,7 +31,7 @@ public class Enemy : MonoBehaviour
 
     //----------------------------------------------------------------
 
-    private void Hide()
+    public void Hide()
     {
         //Desactivamos el GameObject
         gameObject.SetActive(false);
@@ -105,5 +106,12 @@ public class Enemy : MonoBehaviour
         {
             RecibirDano(1); // Al hacer clic, el enemigo recibe 1 de daño
         }
+    }
+
+    private void HandleActionWithFloat(float value)
+    {
+        Vector3 currentScale = transform.localScale;
+
+        transform.localScale = currentScale * value;
     }
 }

@@ -13,34 +13,6 @@ public class ObjectPool : MonoBehaviour
     [Header("Lista de Proyectiles")]
     public List<GameObject> objectsList;
 
-    //Instancia (Static) de la Clase
-    public static ObjectPool instance;
-
-    //----------------------------------------------------------------
-
-    void Awake()
-    {
-        ControlarUnicaInstancia();
-    }
-
-    //----------------------------------------------------
-
-    private void ControlarUnicaInstancia()
-    {
-        //Si aun no hay instancia de la Clase
-        if (instance == null)
-        {
-            //Asignamos esta instancia
-            instance = this;
-        }
-        //Si ya hay una instancia
-        else
-        {
-            //Destruimos el GameObject 
-            Destroy(gameObject);
-        }
-    }
-
     //----------------------------------------------------------------
 
     void Start()
