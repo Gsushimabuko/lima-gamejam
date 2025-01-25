@@ -31,11 +31,12 @@ public class OrbProjectile : MonoBehaviour
         transform.localScale = currentScale * value;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (other.CompareTag("Enemy"))
+        if (collider.CompareTag("Enemy"))
         {
-            Debug.Log("Hit an enemy!");
+            // Desactivamos al enemigo y lo devolvemos al pool
+            collider.gameObject.SetActive(false);
         }
     }
 }
