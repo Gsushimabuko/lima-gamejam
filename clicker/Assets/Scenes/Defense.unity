@@ -156,7 +156,6 @@ MonoBehaviour:
   dinero: 0
   vidaTexto: {fileID: 447199123}
   dineroTexto: {fileID: 1185205243}
-  globalSize: 1
   paused: 0
 --- !u!4 &110656208
 Transform:
@@ -1372,53 +1371,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &478698319
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 478698321}
-  - component: {fileID: 478698320}
-  m_Layer: 0
-  m_Name: ProjectilePool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &478698320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 478698319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b210c0f34404694ca8adfa6e771df1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabObject: {fileID: 8867863617940056214, guid: 76c10f5ae9942b64cb80a4e39979a33e, type: 3}
-  poolSize: 50
-  objectsList: []
---- !u!4 &478698321
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 478698319}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.95, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562766505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,7 +1763,6 @@ GameObject:
   - component: {fileID: 1121439803}
   - component: {fileID: 1121439801}
   - component: {fileID: 1121439804}
-  - component: {fileID: 1121439805}
   m_Layer: 0
   m_Name: Burbuja
   m_TagString: Bubble
@@ -1908,7 +1859,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1959,7 +1910,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.000012875302, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!114 &1121439804
@@ -1974,24 +1925,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5333c573cf1dab24fb31807b283cda1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  escalaCrecimiento: 0.01
+  escalaCrecimiento: 0.025
   vida: 100
---- !u!114 &1121439805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121439796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 447d823dbea05a54390c56394855c7e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orbPrefab: {fileID: 4425829050707244939, guid: a7b3089b97c7b08469b0a55370766cfe, type: 3}
-  initialOrbCount: 4
-  radiusOffset: 1
-  orbitalSpeed: 50
 --- !u!1 &1122600503
 GameObject:
   m_ObjectHideFlags: 0
@@ -2752,7 +2687,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defensas
+  m_text: Produccion
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3353,4 +3288,3 @@ SceneRoots:
   - {fileID: 2081014473}
   - {fileID: 1121439800}
   - {fileID: 110656208}
-  - {fileID: 478698321}

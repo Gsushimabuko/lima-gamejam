@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public int dinero = 0; // Dinero del jugador
     public TextMeshProUGUI vidaTexto; // Para mostrar la vida de la burbuja en pantalla
     public TextMeshProUGUI dineroTexto; // Para mostrar el dinero del jugador en pantalla
+    public float globalSize = 1f;
 
     public bool paused;
 
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Si ya existe una instancia, destruimos el nuevo objeto
         }
+
+        Bubble.OnActionTriggeredWithFloat += HandleActionWithFloat;
     }
 
     void Start()
@@ -68,5 +71,10 @@ public class GameManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    private void HandleActionWithFloat(float value)
+    {
+        globalSize = globalSize * value;
     }
 }
