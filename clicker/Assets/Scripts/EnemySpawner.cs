@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Prefab del enemigo
-    public float spawnInterval = 2f; // Intervalo de tiempo entre spawns
+    //Object Pool de enemigos
+    [SerializeField] private ObjectPool pool;
+
+    //Tiempo intervalo de Spawn
+    public float spawnInterval = 1.5f; // Intervalo de tiempo entre spawns
+
+    //-----------------------------------------------------------
 
     void Start()
     {
@@ -11,11 +16,16 @@ public class EnemySpawner : MonoBehaviour
         InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
     }
 
+    //-----------------------------------------------------------
+
+
     void SpawnEnemy()
     {
         // Elegir un borde aleatorio para el spawn
         Vector3 spawnPosition = GetRandomSpawnPosition();
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+
+        //Hacemos que el Pool spawnee un enemigo
+        pool.AskForProjectile(spawnPosition);
     }
 
     Vector3 GetRandomSpawnPosition()

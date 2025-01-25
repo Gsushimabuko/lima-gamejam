@@ -5,9 +5,16 @@ public class BubbleClicker : MonoBehaviour
 {
     public TextMeshProUGUI dineroTexto; // Referencia al texto en pantalla
 
+    [SerializeField] private Bubble bubble;
+
+    //--------------------------------------------------------------
+
     // Este método se llama cuando el jugador hace clic en el objeto
     public void OnMouseDown()
     {
+        //Hacemos que crezca 
+        bubble.Grow();
+
         // Aumentar el dinero al hacer clic a través del GameManager
         GameManager.Instance.AgregarDinero(1); // Aumentar 1 al dinero global
 

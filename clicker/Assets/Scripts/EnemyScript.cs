@@ -5,34 +5,51 @@ public class Enemy : MonoBehaviour
     public int vida = 3; // Vida configurable del enemigo
     public int dineroValor = 10; // Dinero que da el enemigo al ser destruido
     public float velocidad = 2f; // Velocidad de movimiento del enemigo
-    public Transform burbuja; // Referencia a la burbuja
+
     private SpriteRenderer spriteRenderer; // Para cambiar el color del enemigo
 
-    void Start()
+    //----------------------------------------------------------------
+
+    void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Obtener el SpriteRenderer para cambiar color
-        if (burbuja == null)
-        {
-            // Si la burbuja no está asignada, buscamos el objeto con la etiqueta "Bubble"
-            burbuja = GameObject.FindGameObjectWithTag("Bubble").transform;
-        }
+        // Obtener el SpriteRenderer para cambiar color
+        spriteRenderer = GetComponent<SpriteRenderer>(); 
     }
+    
+    //----------------------------------------------------------------
 
     void Update()
     {
-        if (burbuja != null)
+        //Si hay una instancia de Bubble asignada
+        if (Bubble.Instance != null)
         {
-            // Mover al enemigo hacia la burbuja
+            // Movemos al enemigo hacia la burbuja
             MoverHaciaBurbuja();
         }
     }
 
+    //----------------------------------------------------------------
+
+    private void Hide()
+    {
+        //Desactivamos el GameObject
+        gameObject.SetActive(false);
+
+        vida = 3;
+
+        spriteRenderer.color = Color.green;
+    }
+
+    //----------------------------------------------------------------
+
     void MoverHaciaBurbuja()
     {
         // Mover al enemigo hacia la burbuja
-        Vector3 direccion = burbuja.position - transform.position;
+        Vector3 direccion = Bubble.Instance.transform.position - transform.position;
         transform.position += direccion.normalized * velocidad * Time.deltaTime;
     }
+
+    //----------------------------------------------------------------
 
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -43,25 +60,29 @@ public class Enemy : MonoBehaviour
             // El enemigo toca la burbuja, reduce la vida de la burbuja
             GameManager.Instance.RecibirDano(10); // Llama al GameManager para reducir vida de la burbuja
 
-            // Destruye al enemigo
-            Destroy(gameObject);
+            // Desactivamos al enemigo
+            Hide();
 
             // Agregar dinero al jugador
             GameManager.Instance.AgregarDinero(dineroValor); // Agregar dinero al jugador
         }
     }
 
+    //----------------------------------------------------------------
+
     // Método para recibir daño
     public void RecibirDano(int dano)
     {
-        vida -= dano; // Reduce la vida del enemigo por el daño recibido
+        // Reduce la vida del enemigo
+        vida -= dano; 
 
         // Cambiar color según la vida restante
         if (vida <= 0)
         {
             // Cuando la vida llegue a 0 o menos, el enemigo muere
             spriteRenderer.color = Color.red; // Cambia a rojo al morir
-            Destroy(gameObject); // El enemigo muere
+            Hide();
+
             GameManager.Instance.AgregarDinero(dineroValor); // Agregar dinero al jugador
         }
         else if (vida == 2)
@@ -70,9 +91,11 @@ public class Enemy : MonoBehaviour
         }
         else if (vida == 1)
         {
-            spriteRenderer.color = Color.green; // Cambia a verde cuando queda 1 de vida
+            spriteRenderer.color = Color.red; // Cambia a verde cuando queda 1 de vida
         }
     }
+
+    //----------------------------------------------------------------
 
     // Método para detectar clics sobre el enemigo
     void OnMouseDown()
