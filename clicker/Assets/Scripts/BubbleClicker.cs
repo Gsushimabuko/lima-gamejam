@@ -12,18 +12,20 @@ public class BubbleClicker : MonoBehaviour
     // Este método se llama cuando el jugador hace clic en el objeto
     public void OnMouseDown()
     {
-        //Hacemos que crezca 
+        // Hacemos que la burbuja crezca
         bubble.Grow();
 
-        // Aumentar el dinero al hacer clic a través del GameManager
-        GameManager.Instance.AgregarDinero(1); // Aumentar 1 al dinero global
+        // Obtener el número de CryptoMiners del GameManager
+        int cryptoMinerCount = GameManager.Instance.cryptoMinerCount;
 
-        // Actualiza el texto en pantalla (puedes obtener la variable directamente del GameManager)
+        // Aumentar el dinero al hacer clic en la burbuja
+        // Añadimos 1 de dinero base + el valor de CryptoMiners
+        GameManager.Instance.AgregarDinero(1 + cryptoMinerCount);
+
+        // Actualiza el texto en pantalla con el nuevo valor de dinero
         dineroTexto.text = "Dinero: " + GameManager.Instance.dinero;
 
         // Cambia el color de la burbuja al azar
         GetComponent<SpriteRenderer>().color = new Color(Random.value, Random.value, Random.value);
-
-        Debug.Log("Click ");
     }
 }

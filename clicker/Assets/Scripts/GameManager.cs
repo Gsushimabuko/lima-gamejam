@@ -9,11 +9,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance; // Instancia estática para acceder desde otros scripts
 
     public int vidaBurbuja = 100; // Vida de la burbuja
-    public int dinero = 0; // Dinero del jugador
+    public int dinero; // Dinero del jugador
     public TextMeshProUGUI vidaTexto; // Para mostrar la vida de la burbuja en pantalla
     public TextMeshProUGUI dineroTexto; // Para mostrar el dinero del jugador en pantalla
 
     public bool paused;
+    public int cryptoMinerCount = 0;
 
     void Awake()
     {
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
         if (vidaBurbuja <= 0)
         {
             // La burbuja ha sido destruida (puedes añadir lógica para finalizar el juego)
-            Debug.Log("La burbuja ha sido destruida!");
+            Debug.Log("GAME OVER");
         }
         ActualizarInterfaz();
     }
@@ -53,6 +54,28 @@ public class GameManager : MonoBehaviour
         ActualizarInterfaz();
     }
 
+
+    // Método para restar dinero
+    public void RestarDinero(int cantidad)
+    {
+        if (dinero >= cantidad)
+        {
+            dinero -= cantidad;
+            ActualizarInterfaz();
+        }
+        else
+        {
+            MostrarErrorDinero();
+        }
+    }
+
+  public void MostrarErrorDinero()
+    {
+        Debug.Log("No tienes suficiente dinero.");
+        // Aquí puedes añadir lógica adicional como mostrar un mensaje en pantalla, efectos visuales, etc.
+    }
+
+
     // Método para actualizar la interfaz de usuario
     void ActualizarInterfaz()
     {
@@ -62,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
+        
     }
 
     public void Quit()
