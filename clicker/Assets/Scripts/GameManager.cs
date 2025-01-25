@@ -1,5 +1,7 @@
-<<<<<<< HEAD
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro; // Usamos TextMeshPro para mostrar el dinero
 
 public class GameManager : MonoBehaviour
@@ -10,6 +12,8 @@ public class GameManager : MonoBehaviour
     public int dinero = 0; // Dinero del jugador
     public TextMeshProUGUI vidaTexto; // Para mostrar la vida de la burbuja en pantalla
     public TextMeshProUGUI dineroTexto; // Para mostrar el dinero del jugador en pantalla
+
+    public bool paused;
 
     void Awake()
     {
@@ -22,36 +26,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Si ya existe una instancia, destruimos el nuevo objeto
         }
-=======
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class GameManager : MonoBehaviour
-{
-    private static GameManager _instance;
-    public static GameManager Instance { get { return _instance; } }
-
-    public bool paused;
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
->>>>>>> 425e26579b47e40de5e95c8bbb9f95e32e920a0a
     }
 
     void Start()
     {
-<<<<<<< HEAD
         // Actualizar la interfaz al inicio
         ActualizarInterfaz();
     }
@@ -81,14 +59,10 @@ public class GameManager : MonoBehaviour
         vidaTexto.text = "Vida Burbuja: " + vidaBurbuja;
         dineroTexto.text = "Dinero: " + dinero;
     }
-}
-=======
-        
-    }
 
     void Update()
     {
-        
+
     }
 
     public void Quit()
@@ -96,4 +70,3 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 }
->>>>>>> 425e26579b47e40de5e95c8bbb9f95e32e920a0a
