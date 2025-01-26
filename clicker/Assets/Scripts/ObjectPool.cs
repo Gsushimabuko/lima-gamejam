@@ -1,100 +1,106 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    [Header("Prefab de Proyectil")]
-    [SerializeField] private GameObject prefabObject;
+    [Header("Lista de Prefabs de Proyectiles")]
+    [SerializeField] private List<GameObject> prefabObjects; // Lista de diferentes tipos de proyectiles
 
-    [Header("Tamaño del Pool")]
+    [Header("Tamaño inicial del Pool")]
     [SerializeField] private int poolSize = 100;
 
     [Header("Lista de Proyectiles")]
-    public List<GameObject> objectsList;
+    private Dictionary<GameObject, List<GameObject>> objectsPool = new Dictionary<GameObject, List<GameObject>>();
 
     //----------------------------------------------------------------
 
     void Start()
     {
-        //Creamos y agregamos la cantidad de proyectiles especificada a la Lista 
-        AddProjectileToPool(poolSize);
+        // Crear un pool inicial para cada tipo de prefab
+        foreach (GameObject prefab in prefabObjects)
+        {
+            if (!objectsPool.ContainsKey(prefab))
+            {
+                objectsPool[prefab] = new List<GameObject>();
+                AddProjectileToPool(prefab, poolSize);
+            }
+        }
     }
 
-    //---------------------------------------------------
+    //----------------------------------------------------------------
 
-    private void AddProjectileToPool(int cantidad)
+    private void AddProjectileToPool(GameObject prefab, int cantidad)
     {
-        //Por cada Item que vaya a tener eN el Pool 
+        // Crear la cantidad especificada de proyectiles para el prefab dado
         for (int i = 0; i < cantidad; i++)
         {
-            //Generamos el GameObject.
-            GameObject @object = Instantiate(prefabObject, this.transform);
+            GameObject newObject = Instantiate(prefab, this.transform);
 
-            //Lo Desactivamos
-            @object.SetActive(false);
+            // Desactivar el objeto y agregarlo a la lista correspondiente
+            newObject.SetActive(false);
+            objectsPool[prefab].Add(newObject);
 
-            //Añadimos el Prefab instanciado a la lista de Prefabs
-            objectsList.Add(@object);
-
-            //El padre de este Objeto será este Pool(Object)
-            @object.transform.parent = transform;
+            // Hacer que el objeto sea hijo del Pool para mantenerlo organizado
+            newObject.transform.parent = transform;
         }
     }
 
-    //-----------------------------------------------------
+    //----------------------------------------------------------------
 
-    public GameObject AskForProjectile(Vector3 coordenadasAparicion)
+    public GameObject AskForProjectile(string prefabName, Vector3 spawnPosition)
     {
-        //Recorremos los Items dentro del Pool
-        for (int i = 0; i < poolSize; i++)
+        // Buscar el prefab por nombre en la lista
+        GameObject requestedPrefab = prefabObjects.Find(prefab => prefab.name == prefabName);
+
+        if (requestedPrefab == null)
         {
-            //Verificamos si el Item se encuentra desactivado
-            if (objectsList[i].activeSelf == false)
+            Debug.LogError($"El prefab solicitado con el nombre '{prefabName}' no existe en la lista de prefabs.");
+            return null;
+        }
+
+        // Verificar si el prefab solicitado está en el pool
+        if (!objectsPool.ContainsKey(requestedPrefab))
+        {
+            Debug.LogError($"El prefab solicitado ({prefabName}) no tiene un pool asignado.");
+            return null;
+        }
+
+        // Buscar un proyectil desactivado dentro del pool de ese prefab
+        List<GameObject> poolForPrefab = objectsPool[requestedPrefab];
+        foreach (GameObject obj in poolForPrefab)
+        {
+            if (!obj.activeSelf)
             {
-                //Modificamos la Posicion del Objeto
-                objectsList[i].transform.position = coordenadasAparicion;
-
-                //Lo activamos
-                objectsList[i].SetActive(true);
-
-                //Lo "devolvemos" al Solicitante
-                return objectsList[i];
+                // Configurar posición y activar el objeto
+                obj.transform.position = spawnPosition;
+                obj.SetActive(true);
+                return obj;
             }
         }
 
-        //Si no hay Objetos disponibles, Creamos 1 más y lo agregamos a la lista
-        AddProjectileToPool(1);
-
-        //Incrementamos el valor del PoolSize
-        poolSize++;
-
-        //Modificamos las coordenadas del ultimo elemento creado
-        objectsList[poolSize - 1].transform.position = coordenadasAparicion;
-
-        //Activamos el último elemento creado
-        objectsList[poolSize - 1].SetActive(true);
-
-        //Devolvemos el último Objeto creado
-        return objectsList[poolSize - 1];
+        // Si no hay proyectiles disponibles, crear uno nuevo
+        AddProjectileToPool(requestedPrefab, 1);
+        GameObject newObject = objectsPool[requestedPrefab][objectsPool[requestedPrefab].Count - 1];
+        newObject.transform.position = spawnPosition;
+        newObject.SetActive(true);
+        return newObject;
     }
 
-    //---------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------
+
     public bool VerifyAllDisabled()
     {
-        bool todoDesactivado = true;
-
-        //Recorremos todos los Proyectiles del Pool
-        for (int i = 0; i < poolSize; i++)
+        // Verificar si todos los proyectiles están desactivados
+        foreach (var pool in objectsPool.Values)
         {
-            //Si hay 1 proyectil activado...
-            if (objectsList[i].activeSelf == true)
+            foreach (GameObject obj in pool)
             {
-                todoDesactivado = false;
+                if (obj.activeSelf)
+                {
+                    return false;
+                }
             }
         }
-
-        //Retornamos el resultado de la comprobacion
-        return todoDesactivado;
+        return true;
     }
 }

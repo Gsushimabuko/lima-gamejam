@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private ObjectPool pool; // Object Pool de enemigos
+    //Object Pool de enemigos
+    [SerializeField] private ObjectPool pool;
+    [SerializeField] private GameObject enemy;
 
     public float spawnInterval = 1.5f; // Intervalo inicial entre spawns
     public float spawnIntervalMultiplier = 0.5f; // Multiplicador para reducir el tiempo de spawn cada incremento
@@ -33,18 +35,19 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        // Generar posición aleatoria
+        // Generar posiciï¿½n aleatoria
         Vector3 spawnPosition = GetRandomSpawnPosition();
 
         // Obtener un enemigo del pool
-        GameObject enemy = pool.AskForProjectile(spawnPosition);
+        GameObject enemy = pool.AskForProjectile("Enemy", spawnPosition);
 
-        // Aumentar la velocidad del enemigo según el multiplicador
+        // Aumentar la velocidad del enemigo segun el multiplicador
         if (enemy != null)
         {
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
             if (enemyComponent != null)
             {
+                enemyComponent.velocidad = enemyComponent.originalSpeed;
                 enemyComponent.velocidad *= speedMultiplier;
             }
         }
@@ -87,7 +90,7 @@ public class EnemySpawner : MonoBehaviour
         CancelInvoke("SpawnEnemy");
         InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
 
-        // Log para depuración
+        // Log para depuraciï¿½n
         Debug.Log($"Dificultad aumentada: Nuevo intervalo de spawn = {currentSpawnInterval}, Multiplicador de velocidad = {speedMultiplier}");
     }
 }

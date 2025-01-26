@@ -51,7 +51,7 @@ public class OrbShooter : MonoBehaviour
     {
         if (bulletPrefab == null || firePoint == null) return;
 
-        GameObject bullet = projectilesPool.AskForProjectile(firePoint.position);
+        GameObject bullet = projectilesPool.AskForProjectile(bulletPrefab.name, firePoint.position);
         Vector3 direction = (target - firePoint.position).normalized;
 
         bullet.GetComponent<Rigidbody2D>().velocity = direction * 20f; // Cambia la velocidad si lo necesitas
