@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4826626171697066659}
   - component: {fileID: 2593510966134155355}
   - component: {fileID: 1086309155737517376}
-  - component: {fileID: 6892635415838244126}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -29,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 2160925584819389935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1182.3313, y: 671.1271, z: 0}
-  m_LocalScale: {x: 2.8534539, y: 3.1518395, z: 1.6199}
+  m_LocalPosition: {x: 1182.0228, y: 670.7441, z: 0}
+  m_LocalScale: {x: 1.6199, y: 1.6199, z: 1.6199}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7cac1319102c2484fae7f1b6ee362191, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -119,9 +118,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004235205, y: -0.021800073}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2204649
+  m_Radius: 0.49999997
 --- !u!114 &1086309155737517376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,25 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e093a5c654d1742bf9e6b96daefc32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
---- !u!95 &6892635415838244126
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2160925584819389935}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 862ce5f5d9bcd794186a9c17e31f8fa3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  moveSpeed: 4
