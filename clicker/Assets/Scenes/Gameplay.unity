@@ -384,11 +384,11 @@ RectTransform:
   m_Children:
   - {fileID: 865020096}
   - {fileID: 1598587981}
-  m_Father: {fileID: 1580910009}
+  m_Father: {fileID: 1122600504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -187.76326}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 86.659996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &224515660
@@ -726,7 +726,7 @@ MonoBehaviour:
   cryptoMinerPrice: 100
   botSpawnerPrice: 200
   networkMarketingPrice: 1000
-  networkMarketingMultiply: 3
+  networkMarketingMultiply: 1.25
   botInterval: 1
 --- !u!4 &402268481
 Transform:
@@ -1500,6 +1500,7 @@ RectTransform:
   m_Children:
   - {fileID: 1249287621}
   - {fileID: 1580910009}
+  - {fileID: 224515659}
   m_Father: {fileID: 1143062902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -1524,10 +1525,10 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -2405,7 +2406,6 @@ RectTransform:
   m_Children:
   - {fileID: 339397969}
   - {fileID: 256594450}
-  - {fileID: 224515659}
   m_Father: {fileID: 1122600504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

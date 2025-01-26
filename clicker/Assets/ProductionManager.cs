@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class ProductionManager : MonoBehaviour
     public int cryptoMinerPrice; // Precio del Crypto Miner
     public int botSpawnerPrice; // Precio del Bot Spawner
     public int networkMarketingPrice; // Precio del Bot Spawner
-    public int networkMarketingMultiply; // Precio del Bot Spawner
+    public float networkMarketingMultiply; // Precio del Bot Spawner
     public float botInterval = 1f; // Tiempo entre clicks automáticos del bot
 
     private int activeBotsCount = 0; // Contador de bots activos
@@ -84,7 +85,7 @@ public class ProductionManager : MonoBehaviour
             activeBotsCount += newBotsToAdd;
 
             // Multiplica por 5 el CryptoMiner Count
-            GameManager.Instance.cryptoMinerCount *= networkMarketingMultiply;
+            GameManager.Instance.cryptoMinerCount = (int)Math.Round(GameManager.Instance.cryptoMinerCount * networkMarketingMultiply);
 
             Debug.Log($"Network Marketing aplicado: {activeBotsCount} Bots Spawners activos, CryptoMinerCount = {GameManager.Instance.cryptoMinerCount}");
         }
