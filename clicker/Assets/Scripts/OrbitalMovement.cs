@@ -4,98 +4,143 @@ using UnityEngine;
 
 public class OrbitalMovement : MonoBehaviour
 {
-    public GameObject orbPrefab; // Prefab del orbe
-    public int initialOrbCount = 5; // Cantidad inicial de orbes
-    public float radiusOffset = 1.0f; // Distancia inicial de los orbes desde el objeto
-    public float orbitalSpeed = 10f; // Velocidad de rotación de los orbes
-    private List<GameObject> orbs = new List<GameObject>(); // Lista de orbes instanciados
-    private float currentAngle = 0f; // Ángulo de rotación global
+    public enum OrbType
+    {
+        Tower1,
+        Tower2,
+        Tower3
+    }
+
+    [System.Serializable]
+    public class OrbitalRing
+    {
+        public OrbType orbType; // Tipo de orbe
+        public GameObject prefab; // Prefab del orbe
+        public int initialOrbCount = 5; // Cantidad inicial de orbes
+        public float radiusOffset = 1.0f; // Distancia del anillo al centro
+        public float orbitalSpeed = 10f; // Velocidad de rotación del anillo
+    }
+
+    public List<OrbitalRing> orbitalRings = new List<OrbitalRing>(); // Lista de anillos orbitales
+    private Dictionary<OrbitalRing, List<GameObject>> orbsByRing = new Dictionary<OrbitalRing, List<GameObject>>(); // Diccionario para rastrear los orbes por anillo
+    private Dictionary<OrbitalRing, float> currentAngles = new Dictionary<OrbitalRing, float>(); // Ángulos actuales de los anillos
 
     private void Start()
     {
-        // Instanciar los orbes alrededor del objeto
-        InstantiateOrbs(initialOrbCount);
+        // Instanciar los orbes de cada anillo
+        foreach (OrbitalRing ring in orbitalRings)
+        {
+            InstantiateOrbs(ring);
+            currentAngles[ring] = 0f; // Inicializar ángulo para cada anillo
+        }
+
         Bubble.OnActionTriggeredWithFloat += HandleActionWithFloat;
     }
 
     private void Update()
     {
-        // Revisa si se presiona la tecla Escape
+        // Actualizar la rotación de cada anillo
+        foreach (OrbitalRing ring in orbitalRings)
+        {
+            currentAngles[ring] += ring.orbitalSpeed * Time.deltaTime;
+            if (currentAngles[ring] >= 360f)
+            {
+                currentAngles[ring] -= 360f;
+            }
+
+            RotateOrbs(ring);
+        }
+
+        // Presionar espacio para agregar un nuevo orbe al primer anillo como ejemplo
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Agregar un nuevo orbe y recalcular las distancias
-            AddOrb();
+            AddTower(OrbType.Tower1);
         }
-
-        // Rotar los orbes alrededor del objeto
-        currentAngle += orbitalSpeed * Time.deltaTime; // Incrementar el ángulo con el tiempo
-
-        // Asegurarse de que el ángulo no pase de 360 grados
-        if (currentAngle >= 360f)
-        {
-            currentAngle -= 360f;
-        }
-
-        RotateOrbs();
     }
 
-    void InstantiateOrbs(int count)
+    void InstantiateOrbs(OrbitalRing ring)
     {
-        // Crear los orbes alrededor del objeto, distribuidos equidistantemente
-        float angleStep = 360f / count;
-        for (int i = 0; i < count; i++)
+        // Crear los orbes para un anillo específico
+        float angleStep = 360f / ring.initialOrbCount;
+        List<GameObject> ringOrbs = new List<GameObject>();
+
+        for (int i = 0; i < ring.initialOrbCount; i++)
         {
             float angle = i * angleStep;
-            Vector3 orbPosition = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0) * (radiusOffset + transform.localScale.x);
-            GameObject orb = Instantiate(orbPrefab, transform.position + orbPosition, Quaternion.identity);
-            orbs.Add(orb);
+            Vector3 orbPosition = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0) * (ring.radiusOffset + transform.localScale.x);
+            GameObject orb = Instantiate(ring.prefab, transform.position + orbPosition, Quaternion.identity);
+            ringOrbs.Add(orb);
+
+            // Ajustar la escala del orbe si es necesario
             Vector3 currentScale = orb.transform.localScale;
             orb.transform.localScale = currentScale * GameManager.Instance.globalSize;
         }
+
+        orbsByRing[ring] = ringOrbs;
     }
 
-    void AddOrb()
+    public void AddTower(OrbType orbType)
     {
-        // Añadir un nuevo orbe
-        int newCount = orbs.Count + 1;
-        DestroyAllOrbs();
-        InstantiateOrbs(newCount);
+        // Encontrar el anillo correspondiente al tipo de orbe
+        OrbitalRing ring = orbitalRings.Find(r => r.orbType == orbType);
+        if (ring != null)
+        {
+            int newCount = orbsByRing[ring].Count + 1;
+            DestroyAllOrbs(ring);
+            ring.initialOrbCount = newCount;
+            InstantiateOrbs(ring);
+        }
     }
 
-    void DestroyAllOrbs()
+    public void AddTower1()
     {
-        // Destruir todos los orbes actuales
-        foreach (GameObject orb in orbs)
+        AddTower(OrbType.Tower1);
+    }
+
+    public void AddTower2()
+    {
+        AddTower(OrbType.Tower2);
+    }
+
+    public void AddTower3()
+    {
+        AddTower(OrbType.Tower3);
+    }
+
+    void DestroyAllOrbs(OrbitalRing ring)
+    {
+        // Destruir todos los orbes de un anillo específico
+        foreach (GameObject orb in orbsByRing[ring])
         {
             Destroy(orb);
         }
-        orbs.Clear();
+        orbsByRing[ring].Clear();
     }
 
-    void RotateOrbs()
+    void RotateOrbs(OrbitalRing ring)
     {
-        // Rotar los orbes alrededor del objeto utilizando el ángulo global
-        for (int i = 0; i < orbs.Count; i++)
+        // Rotar los orbes de un anillo específico
+        List<GameObject> ringOrbs = orbsByRing[ring];
+        for (int i = 0; i < ringOrbs.Count; i++)
         {
-            // Calcular la nueva posición del orbe en función del ángulo
-            float angle = (i * (360f / orbs.Count)) + currentAngle; // Agregar el ángulo global
-            Vector3 newPosition = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0) * (transform.lossyScale.x + radiusOffset);
-            orbs[i].transform.position = transform.position + newPosition; // Actualizar la posición del orbe
+            float angle = (i * (360f / ringOrbs.Count)) + currentAngles[ring];
+            Vector3 newPosition = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0) * (ring.radiusOffset + transform.lossyScale.x);
+            ringOrbs[i].transform.position = transform.position + newPosition;
         }
     }
 
     private void HandleActionWithFloat(float value)
     {
-        foreach (GameObject orb in orbs)
+        foreach (var ring in orbsByRing)
         {
-            // Obtenemos la escala actual del orb
-            Vector3 currentScale = orb.transform.localScale;
+            foreach (GameObject orb in ring.Value)
+            {
+                // Obtenemos la escala actual del orbe
+                Vector3 currentScale = orb.transform.localScale;
 
-            // Multiplicamos la escala actual por el valor recibido
-            orb.transform.localScale = currentScale * value;
-
-            // Si quieres que la escala no sea menor que un valor específico, puedes usar algo como esto:
-            // orb.transform.localScale = Vector3.Max(currentScale * value, new Vector3(minScale, minScale, minScale));
+                // Multiplicamos la escala actual por el valor recibido
+                orb.transform.localScale = currentScale * value;
+            }
         }
     }
 }
