@@ -3281,6 +3281,7 @@ MonoBehaviour:
   escalaCrecimiento: 0.025
   vida: 100
   animator: {fileID: 0}
+  clipDamage: {fileID: 8300000, guid: d18552552f4d3e84f84676164d800e74, type: 3}
 --- !u!114 &1249071670
 MonoBehaviour:
   m_ObjectHideFlags: 0
