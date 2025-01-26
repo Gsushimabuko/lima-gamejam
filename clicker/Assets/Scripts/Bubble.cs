@@ -10,7 +10,9 @@ public class Bubble : MonoBehaviour
 
     public static Action<float> OnActionTriggeredWithFloat;
 
-    [SerializeField] private int vida = 100; 
+    [SerializeField] private int vida = 100;
+
+    [SerializeField] private Animator animator;
 
     //----------------------------------------------------------------
 
@@ -23,8 +25,14 @@ public class Bubble : MonoBehaviour
 
     //----------------------------------------------------------------
 
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public void Grow()
     {
+        animator.SetTrigger("click");
         // Capturamos la escala inicial
         Vector3 currentScale = transform.localScale;
 
@@ -38,17 +46,9 @@ public class Bubble : MonoBehaviour
         // transform.localScale = newScale;
 
         // Disparamos la acción con el factor de cambio
-        Debug.Log(scaleChange);  // Esto debería imprimir > 1 si crece y < 1 si decrece
         OnActionTriggeredWithFloat?.Invoke(scaleChange);
     }
 
-
-
-
-
     //----------------------------------------------------------------
-
-
-
 
 }
