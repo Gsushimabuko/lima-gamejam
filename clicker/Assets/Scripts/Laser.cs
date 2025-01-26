@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
@@ -12,6 +13,17 @@ public class ObjectSpawner : MonoBehaviour
     private float nextBatchTime = 0f; // Tiempo para el próximo lote
     private int shotsFiredInBatch = 0; // Contador de disparos realizados en el lote
     private float nextShotTime = 0f;  // Tiempo para el próximo disparo en el lote
+
+    public int cost;
+    public int count = 0;
+    public TextMeshProUGUI costText;
+    public TextMeshProUGUI countText;
+
+    private void Start()
+    {
+        costText.text = cost.ToString();
+        countText.text = count.ToString();
+    }
 
     private void Update()
     {
@@ -69,9 +81,20 @@ public class ObjectSpawner : MonoBehaviour
 
     public void AddLaser()
     {
+        if (GameManager.Instance.dinero < cost)
+        {
+            return;
+        }
         if (canShoot == false)
             canShoot = true;
         else
             shotsPerBatch++;
+
+        GameManager.Instance.RestarDinero(cost);
+
+        cost *= 2;
+        costText.text = cost.ToString();
+        count++;    
+        countText.text = count.ToString();
     }
 }

@@ -43,9 +43,6 @@ TagManager:
   - name: Background
     uniqueID: 4081964109
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Enemies
     uniqueID: 1714801511
     locked: 0
@@ -60,4 +57,7 @@ TagManager:
     locked: 0
   - name: Bubble
     uniqueID: 3721619189
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class OrbitalMovement : MonoBehaviour
 {
@@ -16,9 +19,13 @@ public class OrbitalMovement : MonoBehaviour
     {
         public OrbType orbType; // Tipo de orbe
         public GameObject prefab; // Prefab del orbe
-        public int initialOrbCount = 5; // Cantidad inicial de orbes
         public float radiusOffset = 1.0f; // Distancia del anillo al centro
         public float orbitalSpeed = 10f; // Velocidad de rotación del anillo
+        public int cost;
+        public int count = 0;
+        public float costMultiplier;
+        public TextMeshProUGUI costText;
+        public TextMeshProUGUI countText;
     }
 
     public List<OrbitalRing> orbitalRings = new List<OrbitalRing>(); // Lista de anillos orbitales
@@ -61,10 +68,10 @@ public class OrbitalMovement : MonoBehaviour
     void InstantiateOrbs(OrbitalRing ring)
     {
         // Crear los orbes para un anillo específico
-        float angleStep = 360f / ring.initialOrbCount;
+        float angleStep = 360f / ring.count;
         List<GameObject> ringOrbs = new List<GameObject>();
 
-        for (int i = 0; i < ring.initialOrbCount; i++)
+        for (int i = 0; i < ring.count; i++)
         {
             float angle = i * angleStep;
             Vector3 orbPosition = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0) * (ring.radiusOffset + transform.localScale.x);
@@ -77,6 +84,9 @@ public class OrbitalMovement : MonoBehaviour
         }
 
         orbsByRing[ring] = ringOrbs;
+
+        ring.costText.text = ring.cost.ToString();
+        ring.countText.text = ring.count.ToString();
     }
 
     public void AddTower(OrbType orbType)
@@ -85,9 +95,15 @@ public class OrbitalMovement : MonoBehaviour
         OrbitalRing ring = orbitalRings.Find(r => r.orbType == orbType);
         if (ring != null)
         {
+            if (GameManager.Instance.dinero < ring.cost)
+            {
+                return;
+            }
+            GameManager.Instance.RestarDinero(ring.cost);
             int newCount = orbsByRing[ring].Count + 1;
             DestroyAllOrbs(ring);
-            ring.initialOrbCount = newCount;
+            ring.count = newCount;
+            ring.cost = (int)(ring.cost * ring.costMultiplier);
             InstantiateOrbs(ring);
         }
     }
