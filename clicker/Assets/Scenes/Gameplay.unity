@@ -4655,7 +4655,11 @@ MonoBehaviour:
   cryptoMinerCount: 0
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   HealthBarSlider: {fileID: 616644548}
+=======
+  bubbleRenderer: {fileID: 1249071673}
+>>>>>>> Stashed changes
 =======
   bubbleRenderer: {fileID: 1249071673}
 >>>>>>> Stashed changes
