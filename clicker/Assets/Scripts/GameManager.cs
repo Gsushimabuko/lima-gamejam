@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro; // Usamos TextMeshPro para mostrar el dinero
 using UnityEngine.UI;
 
@@ -14,13 +12,21 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI dineroTexto; // Para mostrar el dinero del jugador en pantalla
     public float globalSize = 1f;
 
+<<<<<<< Updated upstream
 
+=======
+    public TextMeshProUGUI tiempoTexto; // Referencia al texto en pantalla para mostrar el tiempo
+>>>>>>> Stashed changes
     private float tiempoTranscurrido = 0f; // Tiempo en segundos
 
     public bool paused;
     public int cryptoMinerCount = 0;
 
+<<<<<<< Updated upstream
     [SerializeField] private Slider HealthBarSlider;
+=======
+    public SpriteRenderer bubbleRenderer; // Referencia al SpriteRenderer de la burbuja
+>>>>>>> Stashed changes
 
     void Awake()
     {
@@ -39,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+  
         StartCoroutine(TrackTimeRoutine());
         // Actualizar la interfaz al inicio
         ActualizarInterfaz();
@@ -47,8 +54,16 @@ public class GameManager : MonoBehaviour
     // Método para reducir la vida de la burbuja
     public void RecibirDano(int dano)
     {
+        // PLAY SOUND damage
+
         vidaBurbuja -= dano;
+<<<<<<< Updated upstream
         HealthBarSlider.value = vidaBurbuja;
+=======
+
+        // Llamar a la animación de cambio de color cuando recibe daño
+        StartCoroutine(FlashDamageColor());
+>>>>>>> Stashed changes
 
         if (vidaBurbuja <= 0)
         {
@@ -65,7 +80,6 @@ public class GameManager : MonoBehaviour
         ActualizarInterfaz();
     }
 
-
     // Método para restar dinero
     public void RestarDinero(int cantidad)
     {
@@ -73,6 +87,7 @@ public class GameManager : MonoBehaviour
         {
             dinero -= cantidad;
             ActualizarInterfaz();
+            // PLAY SOUND CACHING
         }
         else
         {
@@ -80,12 +95,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  public void MostrarErrorDinero()
+    public void MostrarErrorDinero()
     {
+        // PLAY SOUND NO MONEY
         Debug.Log("No tienes suficiente dinero.");
         // Aquí puedes añadir lógica adicional como mostrar un mensaje en pantalla, efectos visuales, etc.
     }
-
 
     // Método para actualizar la interfaz de usuario
     public void ActualizarInterfaz()
@@ -93,9 +108,7 @@ public class GameManager : MonoBehaviour
         dineroTexto.text = dinero.ToString();
     }
 
-
-
-    //TIMER
+    // TIMER
     private IEnumerator TrackTimeRoutine()
     {
         while (true)
@@ -111,12 +124,8 @@ public class GameManager : MonoBehaviour
         return tiempoTranscurrido;
     }
 
-
-
-
     void Update()
     {
-       
     }
 
     public void Quit()
@@ -127,5 +136,14 @@ public class GameManager : MonoBehaviour
     private void HandleActionWithFloat(float value)
     {
         globalSize = globalSize * value;
+    }
+
+    // Corrutina para hacer el cambio de color a rojo temporalmente
+    private IEnumerator FlashDamageColor()
+    {
+        Color originalColor = bubbleRenderer.color; // Guardamos el color original
+        bubbleRenderer.color = Color.red; // Cambia el color a rojo
+        yield return new WaitForSeconds(0.2f); // Espera el tiempo de la animación
+        bubbleRenderer.color = originalColor; // Restaura el color original
     }
 }

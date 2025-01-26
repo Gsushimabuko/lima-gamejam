@@ -4652,7 +4652,11 @@ MonoBehaviour:
   globalSize: 1
   paused: 0
   cryptoMinerCount: 0
+<<<<<<< Updated upstream
   HealthBarSlider: {fileID: 616644548}
+=======
+  bubbleRenderer: {fileID: 1249071673}
+>>>>>>> Stashed changes
 --- !u!4 &1825673942
 Transform:
   m_ObjectHideFlags: 0
