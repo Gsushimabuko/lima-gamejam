@@ -2882,6 +2882,7 @@ MonoBehaviour:
   dineroTexto: {fileID: 1448483917}
   instText: {fileID: 2079591330381387107, guid: 48cc3a83ee6ab8a479db1b5704badf37, type: 3}
   bubble: {fileID: 1249071669}
+  flashColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!58 &1249071671
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3816,6 +3817,7 @@ MonoBehaviour:
   vidaTexto: {fileID: 1972091906}
   dineroTexto: {fileID: 1448483917}
   globalSize: 1
+  tiempoTexto: {fileID: 0}
   paused: 0
   cryptoMinerCount: 0
 --- !u!4 &1825673942
@@ -4591,6 +4593,9 @@ MonoBehaviour:
   pool: {fileID: 693895010}
   enemy: {fileID: 6114297598242184641, guid: 31e28b77466d3fd438bef271f886e4e0, type: 3}
   spawnInterval: 1.5
+  spawnIntervalMultiplier: 0.5
+  speedMultiplier: 1.1
+  waveInterval: 10
 --- !u!4 &2107573173
 Transform:
   m_ObjectHideFlags: 0

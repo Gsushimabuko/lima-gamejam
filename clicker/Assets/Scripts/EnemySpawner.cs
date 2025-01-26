@@ -6,36 +6,57 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private ObjectPool pool;
     [SerializeField] private GameObject enemy;
 
-    //Tiempo intervalo de Spawn
-    public float spawnInterval = 1.5f; // Intervalo de tiempo entre spawns
+    public float spawnInterval = 1.5f; // Intervalo inicial entre spawns
+    public float spawnIntervalMultiplier = 0.5f; // Multiplicador para reducir el tiempo de spawn cada incremento
 
-    //-----------------------------------------------------------
+    public float speedMultiplier = 1.1f; // Multiplicador de velocidad de enemigos
+    public float waveInterval = 10f; // Tiempo en segundos para aumentar la dificultad
+
+    private float currentSpawnInterval;
+    private float nextWaveTime;
 
     void Start()
     {
-        // Comienza el spawn de enemigos
-        InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
+        currentSpawnInterval = spawnInterval;
+        nextWaveTime = Time.time + waveInterval;
+
+        InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
     }
 
-    //-----------------------------------------------------------
-
+    void Update()
+    {
+        // Comprueba si es hora de aumentar la dificultad
+        if (Time.time >= nextWaveTime)
+        {
+            IncreaseDifficulty();
+            nextWaveTime += waveInterval;
+        }
+    }
 
     void SpawnEnemy()
     {
-        // Elegir un borde aleatorio para el spawn
+        // Generar posiciï¿½n aleatoria
         Vector3 spawnPosition = GetRandomSpawnPosition();
 
-        //Hacemos que el Pool spawnee un enemigo
-        pool.AskForProjectile("Enemy", spawnPosition);
+        // Obtener un enemigo del pool
+        GameObject enemy = pool.AskForProjectile("Enemy", spawnPosition);
+
+        // Aumentar la velocidad del enemigo segun el multiplicador
+        if (enemy != null)
+        {
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            if (enemyComponent != null)
+            {
+                enemyComponent.velocidad *= speedMultiplier;
+            }
+        }
     }
 
     Vector3 GetRandomSpawnPosition()
     {
-        // Definir los bordes de la pantalla
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
 
-        // Elegir un borde aleatorio
         int spawnSide = Random.Range(0, 4);
         Vector3 spawnPos = Vector3.zero;
 
@@ -55,7 +76,20 @@ public class EnemySpawner : MonoBehaviour
                 break;
         }
 
-        spawnPos.z = 0; // Asegúrate de que los enemigos estén en el plano 2D
+        spawnPos.z = 0;
         return spawnPos;
+    }
+
+    void IncreaseDifficulty()
+    {
+        // Reducir el intervalo de spawn
+        currentSpawnInterval *= spawnIntervalMultiplier;
+
+        // Cancelar y volver a invocar el spawn con el nuevo intervalo
+        CancelInvoke("SpawnEnemy");
+        InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
+
+        // Log para depuraciï¿½n
+        Debug.Log($"Dificultad aumentada: Nuevo intervalo de spawn = {currentSpawnInterval}, Multiplicador de velocidad = {speedMultiplier}");
     }
 }
