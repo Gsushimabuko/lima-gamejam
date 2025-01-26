@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI dineroTexto; // Para mostrar el dinero del jugador en pantalla
     public float globalSize = 1f;
 
+
+    public TextMeshProUGUI tiempoTexto; // Referencia al texto en pantalla para mostrar el tiempo
+    private float tiempoTranscurrido = 0f; // Tiempo en segundos
+
     public bool paused;
     public int cryptoMinerCount = 0;
 
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(TrackTimeRoutine());
         // Actualizar la interfaz al inicio
         ActualizarInterfaz();
     }
@@ -86,9 +91,31 @@ public class GameManager : MonoBehaviour
         dineroTexto.text = "Dinero: " + dinero;
     }
 
+
+
+    //TIMER
+    private IEnumerator TrackTimeRoutine()
+    {
+        while (true)
+        {
+            tiempoTranscurrido += 1f; // Incrementa el tiempo en 1 segundo
+            tiempoTexto.text = $"Time: {Mathf.FloorToInt(tiempoTranscurrido)}"; // Actualiza el texto en pantalla
+            yield return new WaitForSeconds(1f); // Espera 1 segundo antes de actualizar
+        }
+    }
+
+    // Método para obtener el tiempo actual
+    public float GetTiempoTranscurrido()
+    {
+        return tiempoTranscurrido;
+    }
+
+
+
+
     void Update()
     {
-        
+       
     }
 
     public void Quit()

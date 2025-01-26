@@ -8,13 +8,29 @@ public class BubbleClicker : MonoBehaviour
 
     [SerializeField] private Bubble bubble;
 
+    // Color al que parpadeará la burbuja
+    [SerializeField] private Color flashColor = Color.green; // Color del parpadeo
+
+    private Color originalColor; // Color original de la burbuja
+    private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
+
     //--------------------------------------------------------------
 
-    // Este método se llama cuando el jugador hace clic en el objeto
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color; // Guardamos el color original de la burbuja
+    }
+
+    //--------------------------------------------------------------
+
     public void OnMouseDown()
     {
-        // Hacemos que la burbuja crezca
-        bubble.Grow();
+        // Cambiar al color de parpadeo
+        spriteRenderer.color = flashColor;
+
+        // Revertir al color original tras 0.1 segundos
+        Invoke(nameof(RevertColor), 0.1f);
 
         // Obtener el número de CryptoMiners del GameManager
         int cryptoMinerCount = GameManager.Instance.cryptoMinerCount;
@@ -24,9 +40,6 @@ public class BubbleClicker : MonoBehaviour
 
         // Actualiza el texto en pantalla con el nuevo valor de dinero
         dineroTexto.text = "Dinero: " + GameManager.Instance.dinero;
-
-        // Cambia el color de la burbuja al azar
-        GetComponent<SpriteRenderer>().color = new Color(Random.value, Random.value, Random.value);
 
         // Obtener la posición del mouse en el mundo
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -44,4 +57,11 @@ public class BubbleClicker : MonoBehaviour
         Destroy(textInst, 2f);
     }
 
+    //--------------------------------------------------------------
+
+    private void RevertColor()
+    {
+        // Revertir el color al original
+        spriteRenderer.color = originalColor;
+    }
 }
