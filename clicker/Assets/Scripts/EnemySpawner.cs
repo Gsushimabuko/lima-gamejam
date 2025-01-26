@@ -47,6 +47,7 @@ public class EnemySpawner : MonoBehaviour
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
             if (enemyComponent != null)
             {
+                enemyComponent.velocidad = enemyComponent.originalSpeed;
                 enemyComponent.velocidad *= speedMultiplier;
             }
         }

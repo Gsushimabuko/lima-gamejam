@@ -37,10 +37,10 @@ public class Bubble : MonoBehaviour
         animator.SetTrigger("click");
 
         // Capturamos la escala inicial
-        //Vector3 currentScale = transform.localScale;
+        Vector3 currentScale = transform.localScale;
 
         // Calculamos la nueva escala
-        //Vector3 newScale = currentScale + new Vector3(escalaCrecimiento, escalaCrecimiento, 1);
+        Vector3 newScale = currentScale + new Vector3(escalaCrecimiento, escalaCrecimiento, 1);
 
         // Incrementar el contador interno
         internalClickCounter++;

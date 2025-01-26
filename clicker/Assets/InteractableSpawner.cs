@@ -5,8 +5,8 @@ public class InteractableSpawner : MonoBehaviour
     public GameObject moneyBagPrefab;  // Prefab de la bolsa de dinero
     public GameObject minePrefab;      // Prefab de la mina
 
-    public float moneyBagSpawnInterval = 5f;  // Intervalo de aparición de la bolsa de dinero
-    public float mineSpawnInterval = 7f;      // Intervalo de aparición de la mina
+    public float moneyBagSpawnInterval = 15f;  // Intervalo de aparición de la bolsa de dinero
+    public float mineSpawnInterval = 25f;      // Intervalo de aparición de la mina
 
     private float moneyBagTimer = 0f;  // Temporizador para la bolsa de dinero
     private float mineTimer = 0f;      // Temporizador para la mina
