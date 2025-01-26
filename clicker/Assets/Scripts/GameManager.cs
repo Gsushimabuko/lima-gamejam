@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro; // Usamos TextMeshPro para mostrar el dinero
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,16 +11,16 @@ public class GameManager : MonoBehaviour
 
     public int vidaBurbuja = 100; // Vida de la burbuja
     public int dinero; // Dinero del jugador
-    public TextMeshProUGUI vidaTexto; // Para mostrar la vida de la burbuja en pantalla
     public TextMeshProUGUI dineroTexto; // Para mostrar el dinero del jugador en pantalla
     public float globalSize = 1f;
 
 
-    public TextMeshProUGUI tiempoTexto; // Referencia al texto en pantalla para mostrar el tiempo
     private float tiempoTranscurrido = 0f; // Tiempo en segundos
 
     public bool paused;
     public int cryptoMinerCount = 0;
+
+    [SerializeField] private Slider HealthBarSlider;
 
     void Awake()
     {
@@ -47,6 +48,8 @@ public class GameManager : MonoBehaviour
     public void RecibirDano(int dano)
     {
         vidaBurbuja -= dano;
+        HealthBarSlider.value = vidaBurbuja;
+
         if (vidaBurbuja <= 0)
         {
             // La burbuja ha sido destruida (puedes añadir lógica para finalizar el juego)
@@ -87,8 +90,7 @@ public class GameManager : MonoBehaviour
     // Método para actualizar la interfaz de usuario
     public void ActualizarInterfaz()
     {
-        vidaTexto.text = "Vida Burbuja: " + vidaBurbuja;
-        dineroTexto.text = "Dinero: " + dinero;
+        dineroTexto.text = dinero.ToString();
     }
 
 
@@ -99,7 +101,6 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             tiempoTranscurrido += 1f; // Incrementa el tiempo en 1 segundo
-            tiempoTexto.text = $"Time: {Mathf.FloorToInt(tiempoTranscurrido)}"; // Actualiza el texto en pantalla
             yield return new WaitForSeconds(1f); // Espera 1 segundo antes de actualizar
         }
     }
