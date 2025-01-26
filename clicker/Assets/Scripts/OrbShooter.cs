@@ -51,6 +51,7 @@ public class OrbShooter : MonoBehaviour
     {
         if (bulletPrefab == null || firePoint == null) return;
 
+        // PLAY SOUND FIRE
         GameObject bullet = projectilesPool.AskForProjectile(bulletPrefab.name, firePoint.position);
         Vector3 direction = (target - firePoint.position).normalized;
 
