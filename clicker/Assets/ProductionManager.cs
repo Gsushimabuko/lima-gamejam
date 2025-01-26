@@ -1,24 +1,29 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ProductionManager : MonoBehaviour
 {
-    public GameObject cryptoMinerPrefab; // Prefab del Crypto Miner
-    public Transform cryptoMinerContainer; // Contenedor donde se instanciarán los Crypto Miners
-    public int cryptoMinerPrice; // Precio del Crypto Miner
-    private float spacing = 10f; // Espaciado entre CryptoMiners
-    private float minSpacing = 1f; // Espacio mínimo entre CryptoMiners (ajustable)
 
+    public int cryptoMinerPrice; // Precio del Crypto Miner
+    public int botSpawnerPrice; // Precio del Bot Spawner
+    public int networkMarketingPrice; // Precio del Bot Spawner
+    public float networkMarketingMultiply; // Precio del Bot Spawner
+    public float botInterval = 1f; // Tiempo entre clicks automáticos del bot
+
+    private int activeBotsCount = 0; // Contador de bots activos
+    private float minSpacing = 1f; // Espacio mínimo entre CryptoMiners
+
+    // Compra de Crypto Miner
     public void BuyCryptoMiner()
     {
         if (GameManager.Instance.dinero >= cryptoMinerPrice)
         {
             GameManager.Instance.RestarDinero(cryptoMinerPrice);
-            SpawnCryptoMiner();
+  
 
             // Incrementamos el contador en el GameManager
-            GameManager.Instance.cryptoMinerCount = GameManager.Instance.cryptoMinerCount + 1;
+            GameManager.Instance.cryptoMinerCount++;
             Debug.Log($"Cantidad actual de Crypto Miners: {GameManager.Instance.cryptoMinerCount}");
         }
         else
@@ -27,27 +32,66 @@ public class ProductionManager : MonoBehaviour
         }
     }
 
-    public void SpawnCryptoMiner()
+
+    // Compra de Bot Spawner
+    public void BuyBotSpawner()
     {
-        // Instancia el CryptoMiner
-        GameObject newCryptoMiner = Instantiate(cryptoMinerPrefab);
+        if (GameManager.Instance.dinero >= botSpawnerPrice)
+        {
+            GameManager.Instance.RestarDinero(botSpawnerPrice);
 
-        // Asignamos al contenedor (esto hace que se mueva dentro del Canvas)
-        newCryptoMiner.transform.SetParent(cryptoMinerContainer);
+            // Inicia la corutina del bot
+            StartCoroutine(BotSpawnerRoutine());
 
-        // Aseguramos que la posición inicial sea correcta
-        RectTransform rectTransform = newCryptoMiner.GetComponent<RectTransform>();
+            // Incrementa el contador de bots
+            activeBotsCount++;
+            Debug.Log($"Cantidad actual de Bots Spawners: {activeBotsCount}");
+        }
+        else
+        {
+            GameManager.Instance.MostrarErrorDinero();
+        }
+    }
 
-        // Obtenemos los límites del contenedor
-        RectTransform containerRect = cryptoMinerContainer.GetComponent<RectTransform>();
-        float containerWidth = containerRect.rect.width;
-        float containerHeight = containerRect.rect.height;
+    // Rutina del Bot Spawner
+    private IEnumerator BotSpawnerRoutine()
+    {
+        while (true)
+        {
+            // Simula un click en la burbuja
+            GameManager.Instance.AgregarDinero(1 + GameManager.Instance.cryptoMinerCount);
+            Debug.Log("Bot clickeó la burbuja");
 
-        // Generamos una posición aleatoria dentro de los límites del contenedor, con espacio mínimo
-        float randomPosX = Random.Range(-containerWidth / 2 + minSpacing, containerWidth / 2 - minSpacing);
-        float randomPosY = Random.Range(-containerHeight / 2 + minSpacing, containerHeight / 2 - minSpacing);
+            // Espera el tiempo definido antes de volver a clickear
+            yield return new WaitForSeconds(botInterval);
+        }
+    }
 
-        // Establecemos la nueva posición del CryptoMiner
-        rectTransform.localPosition = new Vector3(randomPosX, randomPosY, 0);
+    // Compra de Network Marketing
+    public void BuyNetworkMarketing()
+    {
+
+
+        if (GameManager.Instance.dinero >= networkMarketingPrice)
+        {
+            GameManager.Instance.RestarDinero(networkMarketingPrice);
+
+            // Duplica la cantidad de bots activos
+            int newBotsToAdd = activeBotsCount; // Duplicamos los bots actuales
+            for (int i = 0; i < newBotsToAdd; i++)
+            {
+                StartCoroutine(BotSpawnerRoutine());
+            }
+            activeBotsCount += newBotsToAdd;
+
+            // Multiplica por 5 el CryptoMiner Count
+            GameManager.Instance.cryptoMinerCount = (int)Math.Round(GameManager.Instance.cryptoMinerCount * networkMarketingMultiply);
+
+            Debug.Log($"Network Marketing aplicado: {activeBotsCount} Bots Spawners activos, CryptoMinerCount = {GameManager.Instance.cryptoMinerCount}");
+        }
+        else
+        {
+            GameManager.Instance.MostrarErrorDinero();
+        }
     }
 }
