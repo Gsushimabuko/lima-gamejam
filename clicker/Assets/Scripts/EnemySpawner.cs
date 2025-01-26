@@ -4,6 +4,7 @@ public class EnemySpawner : MonoBehaviour
 {
     //Object Pool de enemigos
     [SerializeField] private ObjectPool pool;
+    [SerializeField] private GameObject enemy;
 
     //Tiempo intervalo de Spawn
     public float spawnInterval = 1.5f; // Intervalo de tiempo entre spawns
@@ -25,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomSpawnPosition();
 
         //Hacemos que el Pool spawnee un enemigo
-        pool.AskForProjectile(spawnPosition);
+        pool.AskForProjectile("Enemy", spawnPosition);
     }
 
     Vector3 GetRandomSpawnPosition()

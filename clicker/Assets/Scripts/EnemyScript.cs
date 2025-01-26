@@ -43,6 +43,15 @@ public class Enemy : MonoBehaviour
 
     //----------------------------------------------------------------
 
+    public void OnEnable()
+    {
+        vida = 3;
+
+        spriteRenderer.color = Color.white;
+    }
+
+    //----------------------------------------------------------------
+
     void MoverHaciaBurbuja()
     {
         // Mover al enemigo hacia la burbuja
