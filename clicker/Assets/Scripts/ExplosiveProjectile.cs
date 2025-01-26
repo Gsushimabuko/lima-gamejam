@@ -26,7 +26,9 @@ public class ExplosiveProjectile : BaseProjectile
                 print("2");
                 // Cuando la animación termina
                 animationPlayed = true;
-                this.gameObject.SetActive(false);
+
+                //Desactivamos el objeto tras 1 segundo
+                Invoke(nameof(DisableObject), 1f);
             }
         }
         else
@@ -40,5 +42,11 @@ public class ExplosiveProjectile : BaseProjectile
         animator.SetTrigger("explosion");
         rb.velocity = Vector3.zero;
         enemy.SetActive(false);
+    }
+
+    private void DisableObject()
+    {
+        this.gameObject.SetActive(false);
+        animator.Play("Idle");
     }
 }
