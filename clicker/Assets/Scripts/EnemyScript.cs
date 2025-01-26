@@ -53,6 +53,10 @@ public class Enemy : MonoBehaviour
         if (col.CompareTag("Bubble"))
         {
             GameManager.Instance.RecibirDano(10);
+
+            //Reproducimos sonido de Daño
+            col.gameObject.GetComponent<Bubble>().PlayDamageSound();
+
             Hide();
             GameManager.Instance.AgregarDinero(dineroValor);
         }
