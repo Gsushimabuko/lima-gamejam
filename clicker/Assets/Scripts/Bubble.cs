@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Bubble : MonoBehaviour
 {
@@ -18,18 +17,12 @@ public class Bubble : MonoBehaviour
     private int count = 0; // Contador principal
     private int internalClickCounter = 0; // Contador interno para controlar los 5 clics
 
-    private AudioSource mAudioSource;
-    [SerializeField] private AudioClip clipDamage;
-    
-
     //----------------------------------------------------------------
 
     private void Awake()
     {
         Instance = this;
         vida = 100;
-
-        mAudioSource = GetComponent<AudioSource>();
     }
 
     //----------------------------------------------------------------
@@ -69,13 +62,6 @@ public class Bubble : MonoBehaviour
 
         // Disparamos la acci�n con el factor de cambio
         //OnActionTriggeredWithFloat?.Invoke(scaleChange);
-    }
-
-    //----------------------------------------------------------------
-
-    public void PlayDamageSound()
-    {
-        mAudioSource.PlayOneShot(clipDamage, 0.5f);
     }
 
     //----------------------------------------------------------------
