@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
 
     // Método para actualizar la interfaz de usuario
-    void ActualizarInterfaz()
+    public void ActualizarInterfaz()
     {
         vidaTexto.text = "Vida Burbuja: " + vidaBurbuja;
         dineroTexto.text = "Dinero: " + dinero;

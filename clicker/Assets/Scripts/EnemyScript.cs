@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int vida = 3; // Vida configurable
+    public int vida = 1; // Vida configurada desde el Inspector a 1
     public int dineroValor = 10; // Dinero que otorga al ser destruido
     public float velocidad = 2f; // Velocidad base de movimiento
 
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
-        vida = 3;
+        vida = 1; // Restablecer vida en caso de que sea necesario
         spriteRenderer.color = Color.green;
     }
 
@@ -54,13 +54,9 @@ public class Enemy : MonoBehaviour
             Hide();
             GameManager.Instance.AgregarDinero(dineroValor);
         }
-        else if (vida == 2)
-        {
-            spriteRenderer.color = Color.yellow;
-        }
         else if (vida == 1)
         {
-            spriteRenderer.color = Color.red;
+            spriteRenderer.color = Color.red; // Al ser de vida 1, ya se pone de color rojo
         }
     }
 
@@ -68,7 +64,7 @@ public class Enemy : MonoBehaviour
     {
         if (vida > 0)
         {
-            RecibirDano(1);
+            RecibirDano(1); // Reduces vida a 1 cuando se hace clic en el enemigo
         }
     }
 
