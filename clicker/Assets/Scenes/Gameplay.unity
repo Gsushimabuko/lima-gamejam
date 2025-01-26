@@ -2617,9 +2617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b210c0f34404694ca8adfa6e771df1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabObjects:
-  - {fileID: 1564584295796911064, guid: 291b6f2205103264ea95d36c58955a93, type: 3}
-  - {fileID: 8867863617940056214, guid: 76c10f5ae9942b64cb80a4e39979a33e, type: 3}
+  prefabObjects: []
   poolSize: 50
 --- !u!4 &1185734586
 Transform:
@@ -2873,25 +2871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447d823dbea05a54390c56394855c7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitalRings:
-  - orbType: 0
-    prefab: {fileID: 4425829050707244939, guid: a7b3089b97c7b08469b0a55370766cfe, type: 3}
-    radiusOffset: -0.2
-    orbitalSpeed: 50
-    cost: 10
-    count: 0
-    costMultiplier: 1.5
-    costText: {fileID: 686842638}
-    countText: {fileID: 419885373}
-  - orbType: 1
-    prefab: {fileID: 2634836810531571127, guid: 63def4d86cd4e5a429d2edd363856ec8, type: 3}
-    radiusOffset: 0.3
-    orbitalSpeed: -50
-    cost: 100
-    count: 0
-    costMultiplier: 1.5
-    costText: {fileID: 1108629803}
-    countText: {fileID: 1068621507}
+  orbitalRings: []
 --- !u!114 &1249071669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3066,16 +3046,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afecd019b960f4f4982d8d83fdbfe4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 2472947975139759402, guid: c14808316299d474b8cfa139c8053b32, type: 3}
-  spawnPoint: {fileID: 1079093802}
+  objectToSpawn: {fileID: 0}
+  spawnPoint: {fileID: 0}
   canShoot: 0
-  shootInterval: 5
-  shotsPerBatch: 1
-  intervalBetweenShots: 0.1
-  cost: 1000
+  shootInterval: 2
+  shotsPerBatch: 5
+  intervalBetweenShots: 0.25
+  cost: 0
   count: 0
-  costText: {fileID: 2105214986}
-  countText: {fileID: 781871176}
+  costText: {fileID: 0}
+  countText: {fileID: 0}
 --- !u!1 &1346468780
 GameObject:
   m_ObjectHideFlags: 0
@@ -5113,7 +5093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 693895010}
-  enemy: {fileID: 6114297598242184641, guid: 31e28b77466d3fd438bef271f886e4e0, type: 3}
+  enemy: {fileID: 0}
   spawnInterval: 5
   spawnIntervalMultiplier: 0.75
   speedMultiplier: 1.1
