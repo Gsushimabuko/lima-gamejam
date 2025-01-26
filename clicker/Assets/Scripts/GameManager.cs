@@ -13,8 +13,11 @@ public class GameManager : MonoBehaviour
     public float globalSize = 1f;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 =======
+=======
+>>>>>>> Stashed changes
     public TextMeshProUGUI tiempoTexto; // Referencia al texto en pantalla para mostrar el tiempo
 >>>>>>> Stashed changes
     private float tiempoTranscurrido = 0f; // Tiempo en segundos
@@ -23,7 +26,11 @@ public class GameManager : MonoBehaviour
     public int cryptoMinerCount = 0;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     [SerializeField] private Slider HealthBarSlider;
+=======
+    public SpriteRenderer bubbleRenderer; // Referencia al SpriteRenderer de la burbuja
+>>>>>>> Stashed changes
 =======
     public SpriteRenderer bubbleRenderer; // Referencia al SpriteRenderer de la burbuja
 >>>>>>> Stashed changes
@@ -58,7 +65,13 @@ public class GameManager : MonoBehaviour
 
         vidaBurbuja -= dano;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         HealthBarSlider.value = vidaBurbuja;
+=======
+
+        // Llamar a la animación de cambio de color cuando recibe daño
+        StartCoroutine(FlashDamageColor());
+>>>>>>> Stashed changes
 =======
 
         // Llamar a la animación de cambio de color cuando recibe daño
