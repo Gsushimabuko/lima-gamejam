@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         if (vidaBurbuja <= 0)
         {
-            // La burbuja ha sido destruida (puedes añadir lógica para finalizar el juego)
+            PauseMenu.instance.GameOver();
             Debug.Log("GAME OVER");
         }
         ActualizarInterfaz();

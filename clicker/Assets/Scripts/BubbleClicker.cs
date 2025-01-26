@@ -42,7 +42,7 @@ public class BubbleClicker : MonoBehaviour
         GameManager.Instance.AgregarDinero(1 + cryptoMinerCount);
 
         // Actualiza el texto en pantalla con el nuevo valor de dinero
-        dineroTexto.text = "Dinero: " + GameManager.Instance.dinero;
+        dineroTexto.text = GameManager.Instance.dinero.ToString();
 
         // Obtener la posición del mouse en el mundo
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

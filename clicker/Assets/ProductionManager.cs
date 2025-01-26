@@ -1,18 +1,52 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class ProductionManager : MonoBehaviour
 {
-
     public int cryptoMinerPrice; // Precio del Crypto Miner
+    public int cryptoMineCount = 0;
+    public TextMeshProUGUI cryptoTextPrice;
+    public TextMeshProUGUI cryptoTextCount;
+    public float cryptoMultiplier = 1.5f;
+
     public int botSpawnerPrice; // Precio del Bot Spawner
-    public int networkMarketingPrice; // Precio del Bot Spawner
-    public float networkMarketingMultiply; // Precio del Bot Spawner
+    public int botSpawnerCount = 0;
+    public TextMeshProUGUI botTextPrice;
+    public TextMeshProUGUI botTextCount;
+    public float botMultiplier = 1.5f;
+
+    public int networkMarketingPrice; // Precio del Network Marketing
+    public int networkMarketingPriceCount = 0;
+    public TextMeshProUGUI networkMarketingTextPrice;
+    public TextMeshProUGUI networkMarketingTextCount;
+    public float networkMarketingMultiplier = 1.5f;
+
+    public float networkMarketingMultiply; // Multiplicador del Network Marketing
     public float botInterval = 1f; // Tiempo entre clicks automáticos del bot
 
     private int activeBotsCount = 0; // Contador de bots activos
     private float minSpacing = 1f; // Espacio mínimo entre CryptoMiners
+
+    private void Start()
+    {
+        // Inicializa los textos con los valores iniciales
+        UpdateTexts();
+    }
+
+    // Actualiza los textos
+    private void UpdateTexts()
+    {
+        cryptoTextPrice.text = $"{cryptoMinerPrice}";
+        cryptoTextCount.text = $"{cryptoMineCount}";
+
+        botTextPrice.text = $"{botSpawnerPrice}";
+        botTextCount.text = $"{botSpawnerCount}";
+
+        networkMarketingTextPrice.text = $"{networkMarketingPrice}";
+        networkMarketingTextCount.text = $"{networkMarketingPriceCount}";
+    }
 
     // Compra de Crypto Miner
     public void BuyCryptoMiner()
@@ -20,18 +54,23 @@ public class ProductionManager : MonoBehaviour
         if (GameManager.Instance.dinero >= cryptoMinerPrice)
         {
             GameManager.Instance.RestarDinero(cryptoMinerPrice);
-  
+
+            cryptoMineCount++;
 
             // Incrementamos el contador en el GameManager
             GameManager.Instance.cryptoMinerCount++;
             Debug.Log($"Cantidad actual de Crypto Miners: {GameManager.Instance.cryptoMinerCount}");
+
+            // Actualiza los textos
+            UpdateTexts();
+
+            cryptoMinerPrice = (int)(cryptoMinerPrice * cryptoMultiplier);
         }
         else
         {
             GameManager.Instance.MostrarErrorDinero();
         }
     }
-
 
     // Compra de Bot Spawner
     public void BuyBotSpawner()
@@ -45,7 +84,13 @@ public class ProductionManager : MonoBehaviour
 
             // Incrementa el contador de bots
             activeBotsCount++;
+            botSpawnerCount++;
             Debug.Log($"Cantidad actual de Bots Spawners: {activeBotsCount}");
+
+            // Actualiza los textos
+            UpdateTexts();
+
+            botSpawnerPrice = (int)(botSpawnerPrice * botMultiplier);
         }
         else
         {
@@ -70,8 +115,6 @@ public class ProductionManager : MonoBehaviour
     // Compra de Network Marketing
     public void BuyNetworkMarketing()
     {
-
-
         if (GameManager.Instance.dinero >= networkMarketingPrice)
         {
             GameManager.Instance.RestarDinero(networkMarketingPrice);
@@ -84,10 +127,16 @@ public class ProductionManager : MonoBehaviour
             }
             activeBotsCount += newBotsToAdd;
 
-            // Multiplica por 5 el CryptoMiner Count
+            // Multiplica por el multiplicador el CryptoMiner Count
             GameManager.Instance.cryptoMinerCount = (int)Math.Round(GameManager.Instance.cryptoMinerCount * networkMarketingMultiply);
 
+            networkMarketingPriceCount++;
             Debug.Log($"Network Marketing aplicado: {activeBotsCount} Bots Spawners activos, CryptoMinerCount = {GameManager.Instance.cryptoMinerCount}");
+
+            // Actualiza los textos
+            UpdateTexts();
+
+            networkMarketingPrice  = (int)(networkMarketingPrice * networkMarketingMultiplier);
         }
         else
         {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    //Object Pool de enemigos
+    // Object Pool de enemigos
     [SerializeField] private ObjectPool pool;
     [SerializeField] private GameObject enemy;
 
@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
 
     public float speedMultiplier = 1.1f; // Multiplicador de velocidad de enemigos
     public float waveInterval = 10f; // Tiempo en segundos para aumentar la dificultad
+    public float startDelay = 20f; // Retraso antes de empezar a generar enemigos
 
     private float currentSpawnInterval;
     private float nextWaveTime;
@@ -18,9 +19,10 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         currentSpawnInterval = spawnInterval;
-        nextWaveTime = Time.time + waveInterval;
+        nextWaveTime = Time.time + waveInterval + startDelay;
 
-        InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
+        // Retrasar el inicio del sistema de generación
+        Invoke("StartSpawning", startDelay);
     }
 
     void Update()
@@ -33,15 +35,20 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    void StartSpawning()
+    {
+        InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
+    }
+
     void SpawnEnemy()
     {
-        // Generar posici�n aleatoria
+        // Generar posición aleatoria
         Vector3 spawnPosition = GetRandomSpawnPosition();
 
         // Obtener un enemigo del pool
         GameObject enemy = pool.AskForProjectile("Enemy", spawnPosition);
 
-        // Aumentar la velocidad del enemigo segun el multiplicador
+        // Aumentar la velocidad del enemigo según el multiplicador
         if (enemy != null)
         {
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
@@ -90,7 +97,7 @@ public class EnemySpawner : MonoBehaviour
         CancelInvoke("SpawnEnemy");
         InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
 
-        // Log para depuraci�n
+        // Log para depuración
         Debug.Log($"Dificultad aumentada: Nuevo intervalo de spawn = {currentSpawnInterval}, Multiplicador de velocidad = {speedMultiplier}");
     }
 }

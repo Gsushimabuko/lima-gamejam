@@ -18,8 +18,11 @@ public class PauseMenu : MonoBehaviour
     public GameObject BGMSlider;
     public GameObject SFXSlider;
 
+    public static PauseMenu instance;
+
     private void Start()
     {
+        instance = this;
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
 
