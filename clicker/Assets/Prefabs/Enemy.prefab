@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1158278574211490451}
   - component: {fileID: 2683115339159994935}
   - component: {fileID: -7582878092047140730}
+  - component: {fileID: 1725467710483939669}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -176,6 +177,27 @@ MonoBehaviour:
   dineroValor: 10
   velocidad: 2
   originalSpeed: 0
+--- !u!95 &1725467710483939669
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6114297598242184641}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f3ed70f3152533478efe30062548610, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3077206631296853152
 PrefabInstance:
   m_ObjectHideFlags: 0
