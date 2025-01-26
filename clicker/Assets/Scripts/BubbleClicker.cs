@@ -29,6 +29,9 @@ public class BubbleClicker : MonoBehaviour
         // Cambiar al color de parpadeo
         spriteRenderer.color = flashColor;
 
+        //Disparamos la Animacion de Burbuja
+        bubble.Grow();
+
         // Revertir al color original tras 0.1 segundos
         Invoke(nameof(RevertColor), 0.1f);
 

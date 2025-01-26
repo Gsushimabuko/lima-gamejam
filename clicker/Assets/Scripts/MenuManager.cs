@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -53,9 +54,9 @@ public class MenuManager : MonoBehaviour
         credis.SetActive(false);
     }
 
-    public void ChangeScene(int n)
+    public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(n);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void NextScene()
