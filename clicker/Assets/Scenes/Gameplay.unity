@@ -592,12 +592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 772dab71f00053a45bced31a6b68421f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cryptoMinerPrice: 10
+  cryptoMinerPrice: 50
   cryptoMineCount: 0
   cryptoTextPrice: {fileID: 1711243485}
   cryptoTextCount: {fileID: 882896291}
   cryptoMultiplier: 1.5
-  botSpawnerPrice: 200
+  botSpawnerPrice: 250
   botSpawnerCount: 0
   botTextPrice: {fileID: 2006780657}
   botTextCount: {fileID: 1799688327}
@@ -6546,7 +6546,7 @@ MonoBehaviour:
     prefab: {fileID: 4425829050707244939, guid: a7b3089b97c7b08469b0a55370766cfe, type: 3}
     radiusOffset: -0.2
     orbitalSpeed: 50
-    cost: 10
+    cost: 100
     count: 0
     costMultiplier: 1.5
     costText: {fileID: 686842638}
@@ -6555,7 +6555,7 @@ MonoBehaviour:
     prefab: {fileID: 2634836810531571127, guid: 63def4d86cd4e5a429d2edd363856ec8, type: 3}
     radiusOffset: 0.3
     orbitalSpeed: -50
-    cost: 100
+    cost: 350
     count: 0
     costMultiplier: 1.5
     costText: {fileID: 1108629803}
@@ -10870,10 +10870,10 @@ MonoBehaviour:
   pool: {fileID: 693895010}
   enemy: {fileID: 6114297598242184641, guid: 31e28b77466d3fd438bef271f886e4e0, type: 3}
   spawnInterval: 1.5
-  spawnIntervalMultiplier: 0.9
+  spawnIntervalMultiplier: 0.65
   speedMultiplier: 1.5
   waveInterval: 20
-  startDelay: 0
+  startDelay: 15
 --- !u!4 &2107573173
 Transform:
   m_ObjectHideFlags: 0

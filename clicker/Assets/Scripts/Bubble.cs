@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -75,7 +76,35 @@ public class Bubble : MonoBehaviour
 
     public void PlayDamageSound()
     {
+        // Reproduce el sonido de daño
         mAudioSource.PlayOneShot(clipDamage, 0.5f);
+
+        // Cambia el color del sprite a rojo por medio segundo
+        StartCoroutine(FlashRed());
+    }
+
+    private IEnumerator FlashRed()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            // Guarda el color original del sprite
+            Color originalColor = spriteRenderer.color;
+
+            // Cambia el color del sprite a rojo
+            spriteRenderer.color = Color.red;
+
+            // Espera medio segundo
+            yield return new WaitForSeconds(0.15f);
+
+            // Restaura el color original del sprite
+            spriteRenderer.color = originalColor;
+        }
+        else
+        {
+            Debug.LogWarning("No SpriteRenderer found on the object.");
+        }
     }
 
     //----------------------------------------------------------------
