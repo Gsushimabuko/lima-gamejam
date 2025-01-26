@@ -38,7 +38,7 @@ public class BubbleClicker : MonoBehaviour
 
         // Instanciar el texto en la posición calculada
         GameObject textInst = Instantiate(instText, spawnPosition, Quaternion.identity);
-        textInst.GetComponent<TextMeshPro>().text = "+1";
+        textInst.GetComponent<TextMeshPro>().text = "+" + (1 + cryptoMinerCount).ToString();
 
         // Destruir el texto después de 2 segundos
         Destroy(textInst, 2f);
