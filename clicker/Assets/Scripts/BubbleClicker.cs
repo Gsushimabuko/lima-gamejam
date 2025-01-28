@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro; // Usamos TextMeshPro para mostrar el dinero
+using UnityEngine;
 
 public class BubbleClicker : MonoBehaviour
 {
@@ -26,6 +26,11 @@ public class BubbleClicker : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         // Cambiar al color de parpadeo
         spriteRenderer.color = flashColor;
 

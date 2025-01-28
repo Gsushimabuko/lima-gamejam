@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
         if (enemy != null)
         {
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            if (enemyComponent != null)
+            if (enemyComponent != null && enemyComponent.velocidad <= enemyComponent.originalSpeed * 3)
             {
                 enemyComponent.velocidad = enemyComponent.originalSpeed;
                 enemyComponent.velocidad *= speedMultiplier;
@@ -93,11 +93,14 @@ public class EnemySpawner : MonoBehaviour
         // Reducir el intervalo de spawn
         currentSpawnInterval *= spawnIntervalMultiplier;
 
-        // Cancelar y volver a invocar el spawn con el nuevo intervalo
-        CancelInvoke("SpawnEnemy");
-        InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
+        if (currentSpawnInterval > 0.1f)
+        {
+            // Cancelar y volver a invocar el spawn con el nuevo intervalo
+            CancelInvoke("SpawnEnemy");
+            InvokeRepeating("SpawnEnemy", 0f, currentSpawnInterval);
 
-        // Log para depuración
-        Debug.Log($"Dificultad aumentada: Nuevo intervalo de spawn = {currentSpawnInterval}, Multiplicador de velocidad = {speedMultiplier}");
+            // Log para depuración
+            Debug.Log($"Dificultad aumentada: Nuevo intervalo de spawn = {currentSpawnInterval}, Multiplicador de velocidad = {speedMultiplier}");
+        }
     }
 }

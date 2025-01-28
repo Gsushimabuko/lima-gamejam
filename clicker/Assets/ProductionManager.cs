@@ -59,12 +59,10 @@ public class ProductionManager : MonoBehaviour
 
             // Incrementamos el contador en el GameManager
             GameManager.Instance.cryptoMinerCount++;
-            Debug.Log($"Cantidad actual de Crypto Miners: {GameManager.Instance.cryptoMinerCount}");
-
-            // Actualiza los textos
-            UpdateTexts();
 
             cryptoMinerPrice = (int)(cryptoMinerPrice * cryptoMultiplier);
+
+            UpdateTexts();
         }
         else
         {
@@ -85,12 +83,10 @@ public class ProductionManager : MonoBehaviour
             // Incrementa el contador de bots
             activeBotsCount++;
             botSpawnerCount++;
-            Debug.Log($"Cantidad actual de Bots Spawners: {activeBotsCount}");
-
-            // Actualiza los textos
-            UpdateTexts();
 
             botSpawnerPrice = (int)(botSpawnerPrice * botMultiplier);
+
+            UpdateTexts();
         }
         else
         {
@@ -131,12 +127,10 @@ public class ProductionManager : MonoBehaviour
             GameManager.Instance.cryptoMinerCount = (int)Math.Round(GameManager.Instance.cryptoMinerCount * networkMarketingMultiply);
 
             networkMarketingPriceCount++;
-            Debug.Log($"Network Marketing aplicado: {activeBotsCount} Bots Spawners activos, CryptoMinerCount = {GameManager.Instance.cryptoMinerCount}");
 
-            // Actualiza los textos
+            networkMarketingPrice = (int)(networkMarketingPrice * networkMarketingMultiplier);
+
             UpdateTexts();
-
-            networkMarketingPrice  = (int)(networkMarketingPrice * networkMarketingMultiplier);
         }
         else
         {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosiveProjectile : BaseProjectile
@@ -19,16 +17,13 @@ public class ExplosiveProjectile : BaseProjectile
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
         {
-            print("1");
             // Si la animación se está reproduciendo
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animationPlayed)
             {
-                print("2");
                 // Cuando la animación termina
                 animationPlayed = true;
 
-                //Desactivamos el objeto tras 1 segundo
-                Invoke(nameof(DisableObject), 1f);
+                Invoke(nameof(DisableObject), 0.1f);
             }
         }
         else
@@ -46,7 +41,7 @@ public class ExplosiveProjectile : BaseProjectile
 
     private void DisableObject()
     {
-        this.gameObject.SetActive(false);
         animator.Play("Idle");
+        this.gameObject.SetActive(false);
     }
 }

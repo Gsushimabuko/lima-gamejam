@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Bubble : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class Bubble : MonoBehaviour
 
     private AudioSource mAudioSource;
     [SerializeField] private AudioClip clipDamage;
-    
+
 
     //----------------------------------------------------------------
 
@@ -60,7 +59,7 @@ public class Bubble : MonoBehaviour
             internalClickCounter = 0; // Reiniciar el contador interno
         }
 
-        if (count >= 1500)
+        if (count >= 2000)
         {
             return;
         }
@@ -69,7 +68,7 @@ public class Bubble : MonoBehaviour
         float scaleChange = currentScale.x / newScale.x; // Calculamos el factor de cambio
 
         // Disparamos la acci�n con el factor de cambio
-        //OnActionTriggeredWithFloat?.Invoke(scaleChange);
+        OnActionTriggeredWithFloat?.Invoke(scaleChange);
     }
 
     //----------------------------------------------------------------

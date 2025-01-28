@@ -16,6 +16,7 @@ public class ObjectSpawner : MonoBehaviour
 
     public int cost;
     public int count = 0;
+    public float costMultiplier = 2;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI countText;
 
@@ -92,9 +93,9 @@ public class ObjectSpawner : MonoBehaviour
 
         GameManager.Instance.RestarDinero(cost);
 
-        cost *= 2;
+        cost = (int)(cost * costMultiplier);
         costText.text = cost.ToString();
-        count++;    
+        count++;
         countText.text = count.ToString();
     }
 }

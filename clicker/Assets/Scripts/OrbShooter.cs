@@ -13,7 +13,7 @@ public class OrbShooter : MonoBehaviour
 
     void Start()
     {
-        //Obtenemos referencia al Pool de Projectiles
+        // Obtenemos referencia al Pool de Projectiles
         projectilesPool = GameObject.Find("ProjectilePool").GetComponent<ObjectPool>();
 
         // Crear un firePoint como hijo del orbe si no existe
@@ -36,15 +36,38 @@ public class OrbShooter : MonoBehaviour
         if (Time.time - lastFireTime < fireCooldown) return;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, fireRange);
+        bool enemyFound = false;
+
         foreach (Collider2D hit in hits)
         {
             if (hit.CompareTag("Enemy"))
             {
+                RotateFirePoint(hit.transform.position); // Rota el firePoint hacia el enemigo
                 FireBullet(hit.transform.position);
                 lastFireTime = Time.time;
+                enemyFound = true;
                 break;
             }
         }
+
+        if (!enemyFound)
+        {
+            // Apunta al opuesto del centro del mapa (0,0,0)
+            Vector3 oppositeDirection = (transform.position - Vector3.zero).normalized;
+            RotateFirePoint(transform.position + oppositeDirection);
+        }
+    }
+
+    private void RotateFirePoint(Vector3 target)
+    {
+        if (firePoint == null) return;
+
+        // Calcula la dirección hacia el objetivo
+        Vector3 direction = target - firePoint.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; // Obtén el ángulo en grados
+
+        // Aplica la rotación al firePoint
+        firePoint.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void FireBullet(Vector3 target)
