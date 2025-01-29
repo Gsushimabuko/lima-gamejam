@@ -5932,7 +5932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -82.61665, y: -75.05745}
+  m_AnchoredPosition: {x: -63.116653, y: -80.55745}
   m_SizeDelta: {x: 124.9, y: 31.9442}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1068621507
@@ -6097,7 +6097,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -68.834, y: -11.931442}
+  m_AnchoredPosition: {x: -49.334, y: -17.431442}
   m_SizeDelta: {x: 123.67, y: 33.8629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1108629803
@@ -9137,7 +9137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 198.5, y: -87.56}
+  m_AnchoredPosition: {x: 179, y: -81.06}
   m_SizeDelta: {x: 112.5, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1728717357
@@ -11435,8 +11435,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pool: {fileID: 693895010}
   enemy: {fileID: 6114297598242184641, guid: 31e28b77466d3fd438bef271f886e4e0, type: 3}
-  spawnInterval: 1.25
-  spawnIntervalMultiplier: 0.77
+  spawnInterval: 1.2
+  spawnIntervalMultiplier: 0.7
   speedMultiplier: 1.25
   waveInterval: 20
   startDelay: 20
