@@ -66,6 +66,7 @@ public class AudioManager : MonoBehaviour
     {
         if (actualBGM.name != newTheme)
         {
+            print("here" + newTheme + "|" + bgMusicVolume);
             actualBGM.source.Stop();
             PlayBGM(newTheme);
             updateBGValume(bgMusicVolume);
@@ -93,7 +94,6 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-
             updateBGMusic("Main Theme Test");
         }
     }
