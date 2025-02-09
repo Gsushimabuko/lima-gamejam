@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Bubble : MonoBehaviour
 {
     // Singleton de Burbuja
     public static Bubble Instance;
 
+    [Header("Escala de crecimiento")]
     [Range(0.001f, 0.1f)][SerializeField] private float escalaCrecimiento;
 
     public static Action<float> OnActionTriggeredWithFloat;
@@ -19,7 +22,18 @@ public class Bubble : MonoBehaviour
     private int internalClickCounter = 0; // Contador interno para controlar los 5 clics
 
     private AudioSource mAudioSource;
-    [SerializeField] private AudioClip clipDamage;
+
+    [Header("Sonidos de la Burbuja")]
+    [SerializeField] private AudioClip damageClip;
+    [SerializeField] private List<AudioClip> bubbleClickClips;
+
+    //Indice de sonido de Burbuja
+    private int clipSoundIndex;
+
+    //Indicador de direccion de frecuencia
+    private int clipFrecuencyIndicator;
+
+    public UnityAction OnBubblePressed;
 
 
     //----------------------------------------------------------------
@@ -29,7 +43,14 @@ public class Bubble : MonoBehaviour
         Instance = this;
         vida = 100;
 
+        //Referencia a componentes
         mAudioSource = GetComponent<AudioSource>();
+
+        //Iniciamos el indice de sonido en 0
+        clipSoundIndex = 0;
+
+        //Iniciamos el indicador de frecuencia en positivo.
+        clipFrecuencyIndicator = 1;
     }
 
     //----------------------------------------------------------------
@@ -41,7 +62,13 @@ public class Bubble : MonoBehaviour
 
     public void Grow()
     {
+        //Invocamos al evento de Burbuja presionada para alertar a los delegados.
+        OnBubblePressed?.Invoke();
+
         animator.SetTrigger("click");
+
+        //Reproducimos sonido de Click
+        PlayClickSound();
 
         // Capturamos la escala inicial
         Vector3 currentScale = transform.localScale;
@@ -71,16 +98,48 @@ public class Bubble : MonoBehaviour
         OnActionTriggeredWithFloat?.Invoke(scaleChange);
     }
 
-    //----------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------
 
     public void PlayDamageSound()
     {
         // Reproduce el sonido de daño
-        mAudioSource.PlayOneShot(clipDamage, 0.5f);
+        mAudioSource.PlayOneShot(damageClip, 0.5f);
 
         // Cambia el color del sprite a rojo por medio segundo
         StartCoroutine(FlashRed());
     }
+
+    public void PlayClickSound()
+    {
+        // Reproduce el sonido de daño
+        mAudioSource.PlayOneShot(bubbleClickClips[clipSoundIndex], 1.00f);
+
+        // Seteamos el indice para el siguiente sonido de click correspondiente
+        SetNextClickSound();
+    }
+
+    private void SetNextClickSound()
+    {
+        //Si el indice se encuentra en el tope de la Lista
+        if (clipSoundIndex == bubbleClickClips.Count - 1)
+        {
+            //Cambiamos el indicador de frecuencia a negativo (descenso)
+            clipFrecuencyIndicator = -1;
+        }
+
+        //Si el indice se encuentra en el inicio de la Lista
+        else if (clipSoundIndex == 0)
+        {
+            //Cambiamos el indicador de frecuencia a Positivo (Ascenso)
+            clipFrecuencyIndicator = 1;
+        }
+
+        //Modificamos el Indice llevandolo en aumento o descenso segun el indicador.
+        clipSoundIndex += (1 * clipFrecuencyIndicator);
+        
+    }
+
+    //------------------------------------------------------------------------------------------------------------
 
     private IEnumerator FlashRed()
     {

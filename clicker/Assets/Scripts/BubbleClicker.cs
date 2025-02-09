@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro; // Usamos TextMeshPro para mostrar el dinero
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class BubbleClicker : MonoBehaviour
 
     private Color originalColor; // Color original de la burbuja
     private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
+
+    
 
     //--------------------------------------------------------------
 
