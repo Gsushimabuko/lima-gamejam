@@ -34,6 +34,7 @@ public class Bubble : MonoBehaviour
     private int clipFrecuencyIndicator;
 
     public UnityAction OnBubblePressed;
+    public UnityAction OnBubbleTakeDamage;
 
 
     //----------------------------------------------------------------
@@ -100,10 +101,13 @@ public class Bubble : MonoBehaviour
 
     //------------------------------------------------------------------------------------------------------
 
-    public void PlayDamageSound()
+    public void PlayDamageEffect()
     {
         // Reproduce el sonido de daño
         mAudioSource.PlayOneShot(damageClip, 0.5f);
+
+        //Invocmaos al Evento de "Burbuja Recibe Daño
+        OnBubbleTakeDamage?.Invoke();
 
         // Cambia el color del sprite a rojo por medio segundo
         StartCoroutine(FlashRed());

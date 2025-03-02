@@ -8,6 +8,16 @@ public class Mine : MonoBehaviour
     private Vector3 direction; // Dirección del movimiento
     private float lifeTime = 5f; // Tiempo que la mina permanece activa antes de desaparecer
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip explosionClip;
+    private AudioSource mAudioSource;
+
+    void Awake()
+    {
+        //Obtenemos referencia a componentes
+        mAudioSource = GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         // Configura la dirección inicial del movimiento hacia un extremo opuesto
@@ -28,6 +38,14 @@ public class Mine : MonoBehaviour
         // Desactiva la mina tras clic y provoca la explosión
         Explode();
         Destroy(gameObject);
+    }
+
+    //------------------------------------------------------------------------
+
+    private void PlayExplotionSound()
+    {
+        //Reproducimos sonido de Disparo
+        mAudioSource.PlayOneShot(explosionClip, 0.1f);
     }
 
     private void SetInitialDirection()
@@ -77,6 +95,9 @@ public class Mine : MonoBehaviour
                 enemyComponent.RecibirDano(1); // La mina les hace 1 de daño
             }
         }
+
+        //Reproducimos sonido de Explosion
+        PlayExplotionSound();
 
     }
 }

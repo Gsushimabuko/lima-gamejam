@@ -15,13 +15,26 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindObjectOfType<Bubble>().OnBubblePressed += OnBubblePressedDelegate;
+        //Asignamos delegados a Eventos de Burbuja
+        Bubble.Instance.OnBubblePressed += OnBubblePressedDelegate;
+        Bubble.Instance.OnBubbleTakeDamage += OnBubbleTakeDamageDelegate;
     }
+
+    //---------------------------------------------------------------------------
+    #region CameraAnimations
 
     private void OnBubblePressedDelegate()
     {
         mAnimator.Play("clickZoom");
     }
+
+    private void OnBubbleTakeDamageDelegate()
+    {
+        mAnimator.Play("DamageShake");
+    }
+
+    #endregion
+    //---------------------------------------------------------------------------
 
     // Update is called once per frame
     void Update()

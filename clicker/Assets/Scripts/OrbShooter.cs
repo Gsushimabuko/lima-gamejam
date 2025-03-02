@@ -11,6 +11,20 @@ public class OrbShooter : MonoBehaviour
 
     private ObjectPool projectilesPool;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip fireSoundClip;
+    private AudioSource mAudioSource;
+
+    //------------------------------------------------------------------
+
+    void Awake()
+    {
+        //Obtenemos referencia a componentes
+        mAudioSource = GetComponent<AudioSource>();
+    }
+
+    //------------------------------------------------------------------
+
     void Start()
     {
         // Obtenemos referencia al Pool de Projectiles
@@ -26,10 +40,14 @@ public class OrbShooter : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------
+
     void Update()
     {
         TryFire();
     }
+
+    //------------------------------------------------------------------
 
     private void TryFire()
     {
@@ -58,6 +76,8 @@ public class OrbShooter : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------
+
     private void RotateFirePoint(Vector3 target)
     {
         if (firePoint == null) return;
@@ -70,6 +90,8 @@ public class OrbShooter : MonoBehaviour
         firePoint.rotation = Quaternion.Euler(0, 0, angle);
     }
 
+    //------------------------------------------------------------------
+
     private void FireBullet(Vector3 target)
     {
         if (bulletPrefab == null || firePoint == null) return;
@@ -78,8 +100,21 @@ public class OrbShooter : MonoBehaviour
         GameObject bullet = projectilesPool.AskForProjectile(bulletPrefab.name, firePoint.position);
         Vector3 direction = (target - firePoint.position).normalized;
 
+        //Reproducimos sonido de Disparo
+        PlayShootSound();
+
         bullet.GetComponent<Rigidbody2D>().velocity = direction * 20f; // Cambia la velocidad si lo necesitas
     }
+
+    //------------------------------------------------------------------
+
+    private void PlayShootSound()
+    {
+        //Reproducimos sonido de Disparo
+        mAudioSource.PlayOneShot(fireSoundClip, 0.1f);
+    }
+
+    //------------------------------------------------------------------
 
     private void OnDrawGizmosSelected()
     {

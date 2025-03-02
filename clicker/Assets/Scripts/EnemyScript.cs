@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour
             GameManager.Instance.RecibirDano(10);
 
             //Reproducimos sonido de Daño
-            col.gameObject.GetComponent<Bubble>().PlayDamageSound();
+            col.gameObject.GetComponent<Bubble>().PlayDamageEffect();
 
             Hide();
             GameManager.Instance.AgregarDinero(dineroValor);
