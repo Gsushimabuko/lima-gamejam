@@ -48,10 +48,6 @@ public class PauseMenu : MonoBehaviour
                 PauseGame();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            victoryMenu.SetActive(true);
-        }
     }
 
     public void PauseGame()

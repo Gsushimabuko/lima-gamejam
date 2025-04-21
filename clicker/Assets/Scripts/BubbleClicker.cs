@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro; // Usamos TextMeshPro para mostrar el dinero
 using UnityEngine;
 
@@ -15,7 +14,7 @@ public class BubbleClicker : MonoBehaviour
     private Color originalColor; // Color original de la burbuja
     private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
 
-    
+
 
     //--------------------------------------------------------------
 
@@ -27,44 +26,47 @@ public class BubbleClicker : MonoBehaviour
 
     //--------------------------------------------------------------
 
-    public void OnMouseDown()
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Lanzamos un rayo desde el mouse
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
+
+            foreach (var hit in hits)
+            {
+                if (hit.collider != null && hit.collider.gameObject == this.gameObject)
+                {
+                    ProcesarClick();
+                    break; // solo necesitas procesarlo una vez
+                }
+            }
+        }
+    }
+
+    //--------------------------------------------------------------
+
+    private void ProcesarClick()
     {
         if (Time.timeScale == 0)
-        {
             return;
-        }
 
-        // Cambiar al color de parpadeo
         spriteRenderer.color = flashColor;
-
-        //Disparamos la Animacion de Burbuja
         bubble.Grow();
-
-        // Revertir al color original tras 0.1 segundos
         Invoke(nameof(RevertColor), 0.1f);
 
-        // Obtener el número de CryptoMiners del GameManager
         int cryptoMinerCount = GameManager.Instance.cryptoMinerCount;
-
-        // Aumentar el dinero al hacer clic en la burbuja
         GameManager.Instance.AgregarDinero(1 + cryptoMinerCount);
-
-        // Actualiza el texto en pantalla con el nuevo valor de dinero
         dineroTexto.text = GameManager.Instance.dinero.ToString();
 
-        // Obtener la posición del mouse en el mundo
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0; // Asegurar que el texto esté en el plano 2D
-
-        // Agregar un desplazamiento aleatorio en X e Y
+        mousePosition.z = 0;
         Vector3 randomOffset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1.5f), 0);
         Vector3 spawnPosition = mousePosition + randomOffset;
 
-        // Instanciar el texto en la posición calculada
         GameObject textInst = Instantiate(instText, spawnPosition, Quaternion.identity);
         textInst.GetComponent<TextMeshPro>().text = "+" + (1 + cryptoMinerCount).ToString();
-
-        // Destruir el texto después de 2 segundos
         Destroy(textInst, 2f);
     }
 
