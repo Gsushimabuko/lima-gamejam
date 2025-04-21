@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,7 +27,7 @@ public class PauseMenu : MonoBehaviour
         audioManager = GameObject.Find("AudioManager");
 
         BGMSlider.GetComponent<Slider>().value = AudioManager.bgMusicVolume;
-        BGMSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.GetComponent<AudioManager>().updateBGValume);
+        BGMSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.GetComponent<AudioManager>().updateMusicVolume);
         updateBGMusic(BGMSlider.GetComponent<Slider>().value);
 
         SFXSlider.GetComponent<Slider>().value = AudioManager.effectsMusicVolume;
@@ -83,7 +81,7 @@ public class PauseMenu : MonoBehaviour
 
     public void updateBGMusic(float n)
     {
-        audioManager.GetComponent<AudioManager>().updateBGValume(n);
+        audioManager.GetComponent<AudioManager>().updateMusicVolume(n);
     }
 
     public void updateSFX(float n)

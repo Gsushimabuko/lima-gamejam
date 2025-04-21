@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro; // Usamos TextMeshPro para mostrar el dinero
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -80,7 +78,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  public void MostrarErrorDinero()
+    public void MostrarErrorDinero()
     {
         Debug.Log("No tienes suficiente dinero.");
         // Aquí puedes añadir lógica adicional como mostrar un mensaje en pantalla, efectos visuales, etc.
@@ -116,7 +114,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-       
+
     }
 
     public void Quit()

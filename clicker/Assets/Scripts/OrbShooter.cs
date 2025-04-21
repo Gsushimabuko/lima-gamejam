@@ -11,18 +11,6 @@ public class OrbShooter : MonoBehaviour
 
     private ObjectPool projectilesPool;
 
-    [Header("Audio")]
-    [SerializeField] private AudioClip fireSoundClip;
-    private AudioSource mAudioSource;
-
-    //------------------------------------------------------------------
-
-    void Awake()
-    {
-        //Obtenemos referencia a componentes
-        mAudioSource = GetComponent<AudioSource>();
-    }
-
     //------------------------------------------------------------------
 
     void Start()
@@ -35,7 +23,7 @@ public class OrbShooter : MonoBehaviour
         {
             GameObject fp = new GameObject("FirePoint");
             fp.transform.SetParent(transform);
-            fp.transform.localPosition = Vector3.up; // Ajusta la posición local según necesites
+            fp.transform.localPosition = Vector3.up; // Ajusta la posiciï¿½n local segï¿½n necesites
             firePoint = fp.transform;
         }
     }
@@ -82,11 +70,11 @@ public class OrbShooter : MonoBehaviour
     {
         if (firePoint == null) return;
 
-        // Calcula la dirección hacia el objetivo
+        // Calcula la direcciï¿½n hacia el objetivo
         Vector3 direction = target - firePoint.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; // Obtén el ángulo en grados
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; // Obtï¿½n el ï¿½ngulo en grados
 
-        // Aplica la rotación al firePoint
+        // Aplica la rotaciï¿½n al firePoint
         firePoint.rotation = Quaternion.Euler(0, 0, angle);
     }
 
@@ -100,18 +88,9 @@ public class OrbShooter : MonoBehaviour
         GameObject bullet = projectilesPool.AskForProjectile(bulletPrefab.name, firePoint.position);
         Vector3 direction = (target - firePoint.position).normalized;
 
-        //Reproducimos sonido de Disparo
-        PlayShootSound();
+        AudioManager.instance.PlaySfx("MyLaserShot");
 
-        bullet.GetComponent<Rigidbody2D>().velocity = direction * 20f; // Cambia la velocidad si lo necesitas
-    }
-
-    //------------------------------------------------------------------
-
-    private void PlayShootSound()
-    {
-        //Reproducimos sonido de Disparo
-        mAudioSource.PlayOneShot(fireSoundClip, 0.1f);
+        bullet.GetComponent<Rigidbody2D>().linearVelocity = direction * 20f; // Cambia la velocidad si lo necesitas
     }
 
     //------------------------------------------------------------------

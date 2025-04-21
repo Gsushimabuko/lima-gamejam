@@ -7,17 +7,6 @@ public class ExplosiveProjectile : BaseProjectile
     [SerializeField] private string animName = "explosion";
     private bool animationPlayed = false;
 
-    [Header("Audio")]
-    [SerializeField] private AudioClip explosionSoundClip;
-    private AudioSource mAudioSource;
-
-    //----------------------------------------------------------------------------
-
-    void Awake()
-    {
-        mAudioSource = GetComponent<AudioSource>();
-    }
-
     //----------------------------------------------------------------------------
 
     private void Start()
@@ -27,22 +16,15 @@ public class ExplosiveProjectile : BaseProjectile
     }
 
     //----------------------------------------------------------------------------
-    private void PlayExplotionSound()
-    {
-        //Reproducimos sonido de Disparo
-        mAudioSource.PlayOneShot(explosionSoundClip, 0.20f);
-    }
-
-    //----------------------------------------------------------------------------
 
     void Update()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
         {
-            // Si la animación se está reproduciendo
+            // Si la animaciï¿½n se estï¿½ reproduciendo
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animationPlayed)
             {
-                // Cuando la animación termina
+                // Cuando la animaciï¿½n termina
                 animationPlayed = true;
 
                 Invoke(nameof(DisableObject), 0.1f);
@@ -58,11 +40,10 @@ public class ExplosiveProjectile : BaseProjectile
 
     protected override void HandleEnemyCollision(GameObject enemy)
     {
-        //Reproducimos sonido de Explosion
-        PlayExplotionSound();
+        AudioManager.instance.PlaySfx("MyBombExplosion");
 
         animator.SetTrigger("explosion");
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         enemy.SetActive(false);
     }
 

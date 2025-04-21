@@ -1,22 +1,10 @@
 using UnityEngine;
-using System.Collections;
-using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
     public float speed = 5f; // Velocidad de movimiento
     private Vector3 direction; // Dirección del movimiento
     private float lifeTime = 5f; // Tiempo que la mina permanece activa antes de desaparecer
-
-    [Header("Audio")]
-    [SerializeField] private AudioClip explosionClip;
-    private AudioSource mAudioSource;
-
-    void Awake()
-    {
-        //Obtenemos referencia a componentes
-        mAudioSource = GetComponent<AudioSource>();
-    }
 
     void Start()
     {
@@ -45,7 +33,7 @@ public class Mine : MonoBehaviour
     private void PlayExplotionSound()
     {
         //Reproducimos sonido de Disparo
-        mAudioSource.PlayOneShot(explosionClip, 0.1f);
+        AudioManager.instance.PlaySfx("BombExplosion");
     }
 
     private void SetInitialDirection()
