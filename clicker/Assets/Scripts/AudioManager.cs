@@ -106,6 +106,10 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound newSound in newSounds)
         {
+            // Verifica si ya existe un sonido con el mismo nombre
+            bool exists = music.Exists(s => s.name == newSound.name);
+            if (exists) continue;
+
             newSound.source = gameObject.AddComponent<AudioSource>();
             newSound.source.clip = newSound.clip;
             newSound.source.volume = newSound.volume;
@@ -119,6 +123,10 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound newSound in newSounds)
         {
+            // Verifica si ya existe un sonido con el mismo nombre
+            bool exists = sfx.Exists(s => s.name == newSound.name);
+            if (exists) continue;
+
             newSound.source = gameObject.AddComponent<AudioSource>();
             newSound.source.clip = newSound.clip;
             newSound.source.volume = newSound.volume;
