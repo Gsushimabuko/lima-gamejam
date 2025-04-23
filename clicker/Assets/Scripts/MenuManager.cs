@@ -5,50 +5,34 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     public GameObject optionsMenu;
-    public GameObject levelSelector;
     public GameObject credis;
     public bool subMenuActive = false;
 
-    public GameObject audioManager;
+    private AudioManager audioManager;
     public GameObject BGMSlider;
     public GameObject SFXSlider;
 
     void Start()
     {
-        audioManager = GameObject.Find("AudioManager");
-
+        audioManager = AudioManager.instance;
         BGMSlider.GetComponent<Slider>().value = AudioManager.bgMusicVolume;
-        BGMSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.GetComponent<AudioManager>().updateMusicVolume);
+        BGMSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.updateMusicVolume);
         updateBGMusic(BGMSlider.GetComponent<Slider>().value);
 
         SFXSlider.GetComponent<Slider>().value = AudioManager.effectsMusicVolume;
-        SFXSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.GetComponent<AudioManager>().updateSfxVolume);
+        SFXSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.updateSfxVolume);
         updateSFX(SFXSlider.GetComponent<Slider>().value);
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Close();
-        }
     }
 
     public void updateBGMusic(float n)
     {
-        audioManager.GetComponent<AudioManager>().updateMusicVolume(n);
+        print(n);
+        audioManager.updateMusicVolume(n);
     }
 
     public void updateSFX(float n)
     {
-        audioManager.GetComponent<AudioManager>().updateSfxVolume(n);
-    }
-
-    public void Close()
-    {
-        optionsMenu.SetActive(false);
-        levelSelector.SetActive(false);
-        credis.SetActive(false);
+        audioManager.updateSfxVolume(n);
     }
 
     public void ChangeScene(string sceneName)

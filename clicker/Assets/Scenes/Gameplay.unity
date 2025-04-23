@@ -7193,7 +7193,6 @@ MonoBehaviour:
   optionsMenu: {fileID: 402486286}
   victoryMenu: {fileID: 666489297}
   gameoverMenu: {fileID: 1904711510}
-  audioManager: {fileID: 0}
   BGMSlider: {fileID: 303504829}
   SFXSlider: {fileID: 760426180}
 --- !u!4 &1287163874
@@ -9643,63 +9642,63 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: BubleClick
     clip: {fileID: 8300000, guid: e8bf7fdbcc2f008428921e5aa2f55bde, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: TurretShot
     clip: {fileID: 8300000, guid: 1f2d92ce01a50d846941089aebd0ceff, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: BombExplosion
     clip: {fileID: 8300000, guid: 8f8bffba880014a429aa051aee774407, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: BubbleExplosion
     clip: {fileID: 8300000, guid: 06d7012b7f459d741941d4e5a3e9bca8, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: LaserShot
     clip: {fileID: 8300000, guid: 338402b273f1f5b4e9433b8249e48600, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: Coin
     clip: {fileID: 8300000, guid: 2514b6856cea86d4b812ed2c2e11fff6, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: MyBombExplosion
     clip: {fileID: 8300000, guid: 23f2daa777ad1b545bf3a131b7780f71, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
   - name: MyLaserShot
     clip: {fileID: 8300000, guid: e33dcc4f244b77c4cbffcf8c999cd10e, type: 3}
     volume: 1
     pitch: 1
     loop: 0
-    permanent: 0
+    permanent: 1
     source: {fileID: 0}
 --- !u!4 &1774950508
 Transform:
