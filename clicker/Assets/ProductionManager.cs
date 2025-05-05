@@ -115,14 +115,6 @@ public class ProductionManager : MonoBehaviour
         {
             GameManager.Instance.RestarDinero(networkMarketingPrice);
 
-            // Duplica la cantidad de bots activos
-            int newBotsToAdd = activeBotsCount; // Duplicamos los bots actuales
-            for (int i = 0; i < newBotsToAdd; i++)
-            {
-                StartCoroutine(BotSpawnerRoutine());
-            }
-            activeBotsCount += newBotsToAdd;
-
             // Multiplica por el multiplicador el CryptoMiner Count
             GameManager.Instance.cryptoMinerCount = (int)Math.Round(GameManager.Instance.cryptoMinerCount * networkMarketingMultiply);
 

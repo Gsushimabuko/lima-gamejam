@@ -16,6 +16,11 @@ public class Enemy : MonoBehaviour
         originalSpeed = velocidad;
     }
 
+    private void OnDestroy()
+    {
+        Bubble.OnActionTriggeredWithFloat -= HandleActionWithFloat;
+    }
+
     void Update()
     {
         if (Bubble.Instance != null)

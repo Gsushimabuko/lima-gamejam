@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,7 +12,6 @@ public class PauseMenu : MonoBehaviour
     public GameObject victoryMenu;
     public GameObject gameoverMenu;
 
-    public GameObject audioManager;
     public GameObject BGMSlider;
     public GameObject SFXSlider;
 
@@ -26,14 +23,15 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
 
-        audioManager = GameObject.Find("AudioManager");
+        AudioManager audioManager = AudioManager.instance;
 
         BGMSlider.GetComponent<Slider>().value = AudioManager.bgMusicVolume;
-        BGMSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.GetComponent<AudioManager>().updateBGValume);
+        BGMSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.updateMusicVolume);
+        print(BGMSlider.GetComponent<Slider>().value);
         updateBGMusic(BGMSlider.GetComponent<Slider>().value);
 
         SFXSlider.GetComponent<Slider>().value = AudioManager.effectsMusicVolume;
-        SFXSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.GetComponent<AudioManager>().updateSfxVolume);
+        SFXSlider.GetComponent<Slider>().onValueChanged.AddListener(audioManager.updateSfxVolume);
         updateSFX(SFXSlider.GetComponent<Slider>().value);
     }
 
@@ -49,10 +47,6 @@ public class PauseMenu : MonoBehaviour
             {
                 PauseGame();
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            victoryMenu.SetActive(true);
         }
     }
 
@@ -83,12 +77,14 @@ public class PauseMenu : MonoBehaviour
 
     public void updateBGMusic(float n)
     {
-        audioManager.GetComponent<AudioManager>().updateBGValume(n);
+        print(n);
+        AudioManager.instance.updateMusicVolume(n);
     }
 
     public void updateSFX(float n)
     {
-        audioManager.GetComponent<AudioManager>().updateSfxVolume(n);
+        print(n);
+        AudioManager.instance.updateSfxVolume(n);
     }
 
     public void ChangeScene(int n)
